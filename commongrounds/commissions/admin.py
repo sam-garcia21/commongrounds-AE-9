@@ -2,12 +2,15 @@ from django.contrib import admin
 
 from .models import Commission, CommissionType
 
+
 class CommissionInline(admin.TabularInline):
     model = Commission
+
 
 class CommissionTypeAdmin(admin.ModelAdmin):
     model = CommissionType
     inlines = [CommissionInline]
+
 
 class CommissionAdmin(admin.ModelAdmin):
     model = Commission
@@ -25,6 +28,7 @@ class CommissionAdmin(admin.ModelAdmin):
             ]
         })
     ]
+
 
 admin.site.register(CommissionType, CommissionTypeAdmin)
 admin.site.register(Commission, CommissionAdmin)
