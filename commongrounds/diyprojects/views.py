@@ -1,3 +1,17 @@
 from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 
-# Create your views here.
+from .models import Project, ProjectCategory
+
+class RecipeListView(ListView):
+    model = Project
+    template_name = 'diyprojects/diyprojects_list.html'
+    
+
+class RecipeDetailView(LoginRequiredMixin, DetailView):
+    model = ProjectCategory
+    template_name = 'diyprojects/diyprojects_detail.html'
+    redirect_field_name = 'ledger:recipe_list'
