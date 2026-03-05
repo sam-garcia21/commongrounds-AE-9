@@ -19,5 +19,3 @@ class CommissionDetailView(DetailView):
 class CommissionListView(ListView):
     model = Commission
     template_name = "commission_list.html"
-
-# Create your views here.
