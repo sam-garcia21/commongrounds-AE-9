@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 
 from .models import Project, ProjectCategory
 
+
 class ProjectListView(ListView):
     model = Project
     template_name = 'diyprojects/diyprojects_list.html'
