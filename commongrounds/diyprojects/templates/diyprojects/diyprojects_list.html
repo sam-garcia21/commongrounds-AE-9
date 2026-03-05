@@ -2,4 +2,16 @@
 
 {% block content%}
 this came from the list view
+<head>
+    <h2> 
+        Recipe List
+    </h2>
+</head>
+    <body>
+        {% for categories in diyprojects_list %}
+            <h3> 
+                {{categories.title}}:
+            </h3>
+        {% endfor %}
+    </body>
 {% endblock %}
