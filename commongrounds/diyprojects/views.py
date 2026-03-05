@@ -6,12 +6,12 @@ from django.views.generic.detail import DetailView
 
 from .models import Project, ProjectCategory
 
-class RecipeListView(ListView):
+class ProjectListView(ListView):
     model = Project
     template_name = 'diyprojects/diyprojects_list.html'
     
 
-class RecipeDetailView(LoginRequiredMixin, DetailView):
+class ProjectDetailView(DetailView):
     model = ProjectCategory
     template_name = 'diyprojects/diyprojects_detail.html'
-    redirect_field_name = 'ledger:recipe_list'
+    #redirect_field_name = 'ledger:recipe_list'
