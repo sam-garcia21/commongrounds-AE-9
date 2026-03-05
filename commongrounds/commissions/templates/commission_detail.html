@@ -9,4 +9,5 @@
         <li> People Required: {{ commission.people_required }} </li>
         <li> Description: {{ commission.description }} </li>
     </ul>
+    <a href="{% url 'commissions:commission_list' %}">Check Other Commissions</a>
 {% endblock %}
