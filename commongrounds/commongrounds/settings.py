@@ -35,7 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'bookclub'
+    'bookclub',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

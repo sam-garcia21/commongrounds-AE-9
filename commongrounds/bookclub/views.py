@@ -10,7 +10,7 @@ def book_list(request):
     return render(request, "bookclub/book_list.html", ctx)
 
 def book_detail(request, pk):
-    book = Book,objects.get(id=pk)
+    book = Book.objects.get(id=pk)
     ctx = {
         "book" : book
     }

@@ -1,0 +1,11 @@
+{% block content %}
+<h2>{{ book.title }}</h2>
+<h3>Author: {{ book.author }}</h3>
+<p>Genre: {{ book.genre.name }}</p>
+<p>Publication Year: {{ book.publication_year }}</p>
+<hr>
+<p>Added to Club: {{ book.created_on|date:"Y-m-d" }}</p>
+<p>Last Updated On: {{ book.updated_on|date:"Y-m-d" }}</p>
+
+<a href="{% url 'bookclub:book_list' %}">Browse More Books</a>
+{% endblock %}

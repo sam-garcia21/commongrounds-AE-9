@@ -14,11 +14,9 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
-BookCategory = Genre 
-
 class Book(models.Model):
     title = models.CharField(max_length=255)
-    genre = models.ForeignKey(BookCategory, on_delete=models.SET_NULL, null=True, related_name="books")
+    genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True, related_name="books")
     author = models.CharField(max_length=255)
     publication_year = models.IntegerField()
 
