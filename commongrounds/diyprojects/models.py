@@ -24,6 +24,6 @@ class Project(models.Model):
         return reverse('diyprojects:diyprojects_detail', args=[str(self.id)])
     
     class Meta: 
-        ordering = ['created_on']
-        verbose_name = 'projectcategory'
-        verbose_name_plural = 'project categories'
+        ordering = ['-created_on']
+        verbose_name = 'project'
+        verbose_name_plural = 'project'

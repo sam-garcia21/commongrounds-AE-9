@@ -14,4 +14,3 @@ class ProjectListView(ListView):
 class ProjectDetailView(DetailView):
     model = Project
     template_name = 'diyprojects/diyprojects_detail.html'
-    #redirect_field_name = 'ledger:recipe_list'
