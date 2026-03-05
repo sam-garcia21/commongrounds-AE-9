@@ -33,4 +33,4 @@ class Commission(models.Model):
         return reverse('task_detail', args=[str(self.id)])
 
     class Meta:
-        ordering = ['-created_on']
+        ordering = ['created_on']
