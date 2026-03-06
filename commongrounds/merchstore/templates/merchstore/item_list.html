@@ -1,0 +1,19 @@
+{% extends "merchstore/base.html" %}
+
+{% block title %}
+Merchandise Store
+{% endblock %}
+
+{% block content %}
+
+<ul>
+{% for item in items %}
+<li>
+<a href="/merchstore/item/{{ item.id }}">
+{{ item.name }} - ${{ item.price }}
+</a>
+</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

@@ -23,3 +23,10 @@ urlpatterns = [
     path('bookclub/', include('bookclub.urls', namespace="bookclub")),
     path('commissions/', include('commissions.urls', namespace="commissions")),
 ]
+from merchstore import views
+
+urlpatterns = [
+    path('', views.home),
+    path('admin/', admin.site.urls),
+    path('merchstore/', include('merchstore.urls')),
+]
