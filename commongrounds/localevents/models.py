@@ -16,7 +16,7 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(EventType, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
-    location = models.CharField()
+    location = models.CharField(max_length=255)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     created_on = models.DateTimeField(auto_now_add=True)
@@ -26,4 +26,4 @@ class Event(models.Model):
         ordering = ['-created_on']
 
     def __str__(self):
-        return self.name
+        return self.title
