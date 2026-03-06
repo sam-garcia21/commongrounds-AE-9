@@ -10,7 +10,7 @@ from .models import Project, ProjectCategory
 class ProjectListView(ListView):
     model = Project
     template_name = 'diyprojects/diyprojects_list.html'
-    
+
 
 class ProjectDetailView(DetailView):
     model = Project
