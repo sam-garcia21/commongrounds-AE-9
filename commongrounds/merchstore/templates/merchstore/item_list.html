@@ -1,4 +1,12 @@
-<h1>Commongrounds Merchandise Store</h1>
+{% extends "merchstore/base.html" %}
+
+{% block title %}
+Merchandise Store
+{% endblock %}
+
+{% block content %}
+
+<ul>
 {% for item in items %}
 <li>
 <a href="/merchstore/item/{{ item.id }}">
@@ -6,3 +14,6 @@
 </a>
 </li>
 {% endfor %}
+</ul>
+
+{% endblock %}
