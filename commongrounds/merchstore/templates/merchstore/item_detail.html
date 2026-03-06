@@ -1,8 +1,4 @@
-{% extends "merchstore/base.html" %}
-
-{% block title %}
-{{ item.name }}
-{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
 
@@ -10,9 +6,9 @@
 
 <p>{{ item.description }}</p>
 
-<p><strong>Type:</strong> {{ item.product_type }}</p>
+<p>Type: {{ item.product_type }}</p>
 
-<p><strong>Price:</strong> ${{ item.price }}</p>
+<p>Price: ${{ item.price }}</p>
 
 <a href="/merchstore/items">Back to items</a>
 
