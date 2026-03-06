@@ -7,11 +7,11 @@ def book_list(request):
     ctx = {
         "books" : books
     }
-    return render(request, "bookclub/book_list.html", ctx)
+    return render(request, "book_list.html", ctx)
 
 def book_detail(request, pk):
     book = Book.objects.get(id=pk)
     ctx = {
         "book" : book
     }
-    return render(request, "bookclub/book_detail.html", ctx)
+    return render(request, "book_detail.html", ctx)
