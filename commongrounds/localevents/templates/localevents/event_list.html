@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h1>Events</h1>
+    <ul>
+        {% for event in object_list %}
+        <li>
+            <a href="{% url 'localevents:event-detail' event.pk %}">
+                {{ event.title }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
