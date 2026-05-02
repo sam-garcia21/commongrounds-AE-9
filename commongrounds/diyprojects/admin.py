@@ -5,8 +5,12 @@ from .models import Project, ProjectCategory
 class ProjectInLine(admin.TabularInline):
     model = Project
 
-class ProjectAdmin(admin.ModelAdmin):
+class ProjectCategoryAdmin(admin.ModelAdmin):
     model = ProjectCategory
     inlines = [ProjectInLine]
 
-admin.site.register(ProjectCategory, ProjectAdmin)
+class ProjectAdmin(admin.ModelAdmin):
+    model = Project
+
+admin.site.register(ProjectCategory, ProjectCategoryAdmin)
+admin.site.register(Project, ProjectAdmin)
