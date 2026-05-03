@@ -8,8 +8,6 @@ from django.views.generic.list import ListView
 
 from .models import Commission
 
-# Create your views here.
-
 
 class CommissionDetailView(DetailView):
     model = Commission

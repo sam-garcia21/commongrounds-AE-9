@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h1>{{ object.title }}</h1>
+    <p>Category: {{ object.category }}</p>
+    <p>Description: {{ object.description }}</p>
+    <p>Location: {{ object.location }}</p>
+    <p>Time: {{ object.start_time }}-{{ object.end_time }}</p>
+{% endblock %}
