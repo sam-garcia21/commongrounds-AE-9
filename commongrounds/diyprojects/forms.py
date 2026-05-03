@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project
+from .models import Project, ProjectReview, Favorite
 
 class ProjectForm(forms.ModelForm):
     class Meta:
@@ -21,4 +21,16 @@ class ProjectUpdateForm(forms.ModelForm):
             'description',
             'materials',
             'steps',
+        ]
+
+class ProjectReviewForm(forms.ModelForm):
+    class Meta:
+        model = ProjectReview
+        fields = '__all__'
+
+class FavoriteForm(forms.ModelForm):
+    class Meta:
+        model = Favorite
+        fields = [
+            'project_status',
         ]

@@ -11,4 +11,17 @@
 <h5>Updated on: {{project.updated_on}}</h5>
 <a href= "{% url 'diyprojects:diyprojects_list' %}">Return to Project List</a>
 
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <input type="submit" value="Submit">
+</form>
+
+{% for review in reviews %}
+        <p>{{ review.comment }}</p>
+        <img src="{{ review.image.image.url }}" alt="">
+{% empty %}
+    <p>No reviews yet for this project.</p>
+{% endfor %}
+
 {% endblock %}

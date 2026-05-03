@@ -43,7 +43,6 @@ class Favorite(models.Model):
     date_favorited = models.DateTimeField(auto_now_add=True)
     STATUS = ((0, 'Backlog'), (1, 'To-Do'), (2, 'Done'))
     project_status = models.SmallIntegerField(choices=STATUS)
-    #DOUBLE CHECK THIS TO SEE IF IT WORKS
 
 class ProjectReview(models.Model):
     #reviewer = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project', null=True, blank=True)
