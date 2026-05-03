@@ -53,7 +53,7 @@ class Commission(models.Model):
         ordering = ['created_on']
 
 
-class Job(models.model):
+class Job(models.Model):
     OPEN = 0
     FULL = 1
     STATUS_CHOICES = {
