@@ -1,15 +1,16 @@
 from django.contrib import admin
 
-from .models import Commission, CommissionType
+from .models import Commission, CommissionType, Job, JobApplication
 
 
 class CommissionInline(admin.TabularInline):
     model = Commission
 
+class JobInline(admin.TabularInline):
+    model = Job
 
-class CommissionTypeAdmin(admin.ModelAdmin):
-    model = CommissionType
-    inlines = [CommissionInline]
+class JobApplicationInline(admin.TabularInline):
+    model = JobApplication
 
 
 class CommissionAdmin(admin.ModelAdmin):
@@ -29,6 +30,23 @@ class CommissionAdmin(admin.ModelAdmin):
         })
     ]
 
+class CommissionAdmin(admin.ModelAdmin):
+    model = Commission
+    inlines = [JobInline]
+
+class CommissionTypeAdmin(admin.ModelAdmin):
+    model = CommissionType
+    inlines = [CommissionInline]
+
+class JobAdmin(admin.ModelAdmin):
+    model = Job
+    inlines = [JobApplicationInline]
+
+class JobApplicationAdmin(admin.ModelAdmin):
+    model = JobApplication
+
 
 admin.site.register(CommissionType, CommissionTypeAdmin)
 admin.site.register(Commission, CommissionAdmin)
+admin.site.register(Job, JobAdmin)
+admin.site.register(JobApplication, JobApplicationAdmin)
