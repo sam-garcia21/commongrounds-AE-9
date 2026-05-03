@@ -15,8 +15,8 @@ class CommissionType(models.Model):
 
 
 class Commission(models.Model):
-    OPEN = 'open'
-    FULL = 'full'
+    OPEN = 0
+    FULL = 1
     STATUS_CHOICES = {
         OPEN: "Open",
         FULL: "Full",
@@ -35,8 +35,7 @@ class Commission(models.Model):
         related_name='commisions',
     )
     people_required = models.IntegerField()
-    status = models.CharField(
-        max_length=4,
+    status = models.IntegerField(
         choices=STATUS_CHOICES,
         default=OPEN
     )
