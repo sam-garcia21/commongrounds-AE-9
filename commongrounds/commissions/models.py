@@ -50,3 +50,29 @@ class Commission(models.Model):
 
     class Meta:
         ordering = ['created_on']
+
+class Job(models.model):
+    OPEN = 0
+    FULL = 1
+    STATUS_CHOICES = {
+        OPEN: "Open",
+        FULL: "Full",
+    }
+    commission = models.ForeignKey(
+        Commission,
+        on_delete=models.CASCADE,
+        related_name='jobs',
+        null=True
+    )
+    role = models.CharField(max_length=255)
+    manpower_required = models.IntegerField()
+    status = models.IntegerField(
+        choices=STATUS_CHOICES,
+        default=OPEN
+    )
+
+    def __str__(self):
+        return f'{self.commission.title} - {self.role}'
+
+    class Meta:
+        ordering = ['status', '-manpower_required', 'role']
