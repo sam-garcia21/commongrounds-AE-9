@@ -5,6 +5,48 @@
 <h3>Author: {{ book.author }}</h3>
 <p>Genre: {{ book.genre.name }}</p>
 <p>Publication Year: {{ book.publication_year }}</p>
+<p>Synopsis: {{ book.synopsis }}</p>
+
+<p>Status:
+    {% if book.is_available %}
+        Available to Borrow
+        <br>
+        <a href="{% url 'bookclub:book_borrow' book.pk %}"><button>Borrow this Book</button></a>
+    {% else %}
+        Currently Not Available 
+    {% endif %}
+</p>
+
+{% if can_edit %}
+    <p><a href="{% url 'bookclub:book_update' book.pk %}">Edit Details</a></p>
+{% endif %}
+<hr>
+
+<p>Bookmarks: {{ bookmark_count }}</p>
+{% if user.is_authenticated %}
+    <form action="{% url 'bookclub:book_bookmark' book.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Bookmark</button>
+    </form>
+{% endif %}
+
+<h3>Reviews</h3>
+{% for review in reviews %}
+    <h4>{{ review.title }}</h4>
+    <p>{{ review.comment }}</p>
+    <small>Reviewed by: {{ review.user_reviewer.display_name|default:review.anon_reviewer }}</small>
+{% empty %}
+    <p>No reviews available for this book yet.</p>
+{% endfor %}
+
+<h4>Leave a Review</h4>
+<form action="{% url 'bookclub:book_detail' book.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Review Title" required><br>
+    <textarea name="comment" placeholder="Your review..."></textarea><br>
+    <button type="submit">Post Review</button>
+</form>
+
 <hr>
 <p>Added to Club: {{ book.created_on|date:"Y-m-d" }}</p>
 <p>Last Updated On: {{ book.updated_on|date:"Y-m-d" }}</p>

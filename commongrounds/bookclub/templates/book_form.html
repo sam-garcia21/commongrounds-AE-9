@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{% if object %} Update {{ object.title }} {% else %} Add Book {% endif %}</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        <p>
+            <label>Title:</label><br>
+            <input type="text" name="title" value="{{ object.title }}" required maxlength="255">
+        </p>
+
+        <p>
+            <label>Genre:</label><br>
+            <select name="genre" required>
+                {% for genre in genres %}
+                    <option value="{{ genre.id }}" {% if object.genre.id == genre.id %}selected{% endif %}>
+                        {{ genre.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label>Author:</label><br>
+            <input type="text" name="author" value="{{ object.author }}" required>
+        </p>
+
+        <p>
+            <label>Synopsis:</label><br>
+            <textarea name="synopsis">{{ object.synopsis }}</textarea>
+        </p>
+
+        <p>
+            <label>Publication Year:</label><br>
+            <input type="number" name="publication_year" value="{{ object.publication_year }}" required>
+        </p>
+
+        <p>
+            <label>Borrow Availability:</label><br>
+            <input type="checkbox" name="is_available" {% if object.is available or not object %}checked{% endif %}>
+        </p>
+
+        <button type="submit">Save Book</button>
+    </form>
+
+    <br>
+    <a href="{% url 'bookclub:book_list' %}">Cancel</a>
+    {% endblock %}
