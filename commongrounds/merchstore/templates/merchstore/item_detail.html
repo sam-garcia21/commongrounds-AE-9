@@ -12,4 +12,22 @@
 
 <a href="/merchstore/items">Back to items</a>
 
+<h3>Buy this product</h3>
+
+{% if user == product.owner %}
+    <p>You cannot buy your own product.</p>
+{% else %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% if product.stock == 0 %}
+            <button type="submit" disabled>Out of Stock</button>
+        {% else %}
+            <button type="submit">Buy</button>
+        {% endif %}
+    </form>
+{% endif %}
+<p>Stock: {{ product.stock }}</p>
+
 {% endblock %}
