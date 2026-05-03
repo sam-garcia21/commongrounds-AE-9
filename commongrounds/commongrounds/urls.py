@@ -25,5 +25,5 @@ urlpatterns = [
     path('commissions/', include('commissions.urls', namespace="commissions")),
     path('merchstore/', include('merchstore.urls', namespace="merchstore")),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('accounts.url', namespace='accounts')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
 ]
