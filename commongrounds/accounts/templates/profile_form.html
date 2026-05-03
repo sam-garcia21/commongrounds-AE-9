@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Profile Update</h2>
+
+<p>Username: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
+<hr>
+<a href="{% url 'logout' %}">Logout</a>
+
+{% endblock %}

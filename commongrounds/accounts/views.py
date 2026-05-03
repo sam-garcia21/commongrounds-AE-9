@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile 
     form_class = ProfileUpdateForm
-    template_name = 'accounts/profile_update.html'
+    template_name = 'accounts/profile_form.html'
 
     def get_object(self):
         profile, created = Profile.objects.get_or_create(user=self.request.user)
