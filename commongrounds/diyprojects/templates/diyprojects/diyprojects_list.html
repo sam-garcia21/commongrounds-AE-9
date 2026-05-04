@@ -1,9 +1,11 @@
 {% extends 'diyprojects/base_diyprojects.html' %}
 {% block content%}
 <h2>Project List</h2>
-    {% for project in project_list %}
+    {% for project in project %}
         <h3> 
             <a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}
         </h3>
     {% endfor %}
+
+    <a href= "{% url 'diyprojects:diyprojects_add' %}">Create New Project</a>
 {% endblock %}

@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -9,31 +8,17 @@ from .models import Project, ProjectCategory, ProjectReview, ProjectRating, Favo
 from .forms import ProjectForm, ProjectUpdateForm,ProjectReviewForm
 
 
-class ProjectListView(ListView):
-    model = Project
-    template_name = 'diyprojects/diyprojects_list.html'
-    
+def project_list(request):
+    project = Project.objects.all()
 
-class ProjectDetailView(DetailView):
-    model = Project
-    template_name = 'diyprojects/diyprojects_detail.html'
+    return render(request, 'diyprojects/diyprojects_list.html', {"project" : project})
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["reviews"] = ProjectReview.objects.all()
-        context["favorite"] = Favorite.objects.all()
-        context["form"] = ProjectReviewForm()
-        return context
-    
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = ProjectReviewForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return self.get(request, *args, **kwargs)
-        else:
-            context = self.get_context_data(form=form)
-            return self.render_to_response(context)
+def project_detail(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    # favorite = project.favorites.count()
+    # ratings = project
+
+    return render(request, 'diyprojects/diyprojects_detail.html', {"project" : project})
         
 
 class ProjectAddView(CreateView):

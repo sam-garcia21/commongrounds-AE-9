@@ -9,7 +9,10 @@
 <h3>steps: {{project.steps}}</h3>
 <h5>Created on: {{project.created_on}}</h5>
 <h5>Updated on: {{project.updated_on}}</h5>
-<a href= "{% url 'diyprojects:diyprojects_list' %}">Return to Project List</a>
+<p><a href= "{% url 'diyprojects:diyprojects_list' %}">Return to Project List</a></p>
+
+<p><a href= "{% url 'diyprojects:diyprojects_update' project.pk %}">Edit this project</a></p>
+
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
