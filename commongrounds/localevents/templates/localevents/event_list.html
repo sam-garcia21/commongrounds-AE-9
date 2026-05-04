@@ -1,15 +1,31 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
-    <h1>Events</h1>
-    <ul>
-        {% for event in object_list %}
-        <li>
-            <a href="{% url 'localevents:event-detail' event.pk %}">
-                {{ event.title }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
+
+<h1>Events</h1>
+
+<a href="{% url 'localevents:event-add' %}">Create Event</a>
+
+{% if user.is_authenticated %}
+<h2>Your Created Events</h2>
+<ul>
+    {% for event in created_events %}
+    <li><a href="{% url 'localevents:event-detail' event.pk %}">{{ event.title }}</a></li>
+    {% endfor %}
+</ul>
+
+<h2>Your Signed Events</h2>
+<ul>
+    {% for event in signed_events %}
+    <li><a href="{% url 'localevents:event-detail' event.pk %}">{{ event.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h2>All Events</h2>
+<ul>
+    {% for event in all_events %}
+    <li><a href="{% url 'localevents:event-detail' event.pk %}">{{ event.title }}</a></li>
+    {% endfor %}
+</ul>
+
 {% endblock %}

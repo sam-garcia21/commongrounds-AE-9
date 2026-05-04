@@ -1,10 +1,35 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
-    <h1>{{ object.title }}</h1>
-    <p>Category: {{ object.category }}</p>
-    <p>Description: {{ object.description }}</p>
-    <p>Location: {{ object.location }}</p>
-    <p>Time: {{ object.start_time }}-{{ object.end_time }}</p>
+
+<h1>{{ object.title }}</h1>
+<p>{{ object.description }}</p>
+<p>Location: {{ object.location }}</p>
+<p>Start: {{ object.start_time }} | End: {{ object.end_time }}</p>
+<p>Status: {{ object.status }} | Signups: {{ object.signup_count }}/{{ object.event_capacity }}</p>
+
+{% if object.event_image %}
+<img src="{{ object.event_image.url }}" width="300">
+{% endif %}
+
+{% if not is_owner %}
+{% if user.is_authenticated %}
+<form method="POST" action="{% url 'localevents:event-signup' object.pk %}">
+    {% csrf_token %}
+    <button type="submit" {% if is_full %}disabled{% endif %}>
+        {% if is_full %}Full{% else %}Sign Up{% endif %}
+    </button>
+</form>
+{% else %}
+<a href="{% url 'localevents:event-signup' object.pk %}">
+    <button {% if is_full %}disabled{% endif %}>
+        {% if is_full %}Full{% else %}Sign Up{% endif %}
+    </button>
+</a>
+{% endif %}
+{% endif %}
+
+{% if is_owner %}
+<a href="{% url 'localevents:event-edit' object.pk %}">Edit</a>
+{% endif %}
+
 {% endblock %}
