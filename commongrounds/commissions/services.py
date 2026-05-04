@@ -1,5 +1,5 @@
 from django.db import transaction
-from .models import Commission, Job
+from .models import Commission, Job, JobApplication
 
 
 @transaction.atomic
@@ -23,6 +23,17 @@ def create_commission(*, author: dict, data: dict, jobs_data: list[dict]) -> Com
     Job.objects.bulk_create(job_instances)
     return commission
 
+
+def apply_to_job(*, applicant: dict, job: dict) -> JobApplication:
+    if JobApplication.objects.filter(job=job, applicant=applicant).exists() and job.status == Job.OPEN:
+        job_application = JobApplication.objects.create(
+            applicant=applicant,
+            job=job,
+        )
+        return JobApplication
+    return JobApplication.objects.none
+
+
 def sync_commission_status(*, commission: dict) -> Commission:
     jobs = Job.objects.filter(commission=commission)
     isFull = True
@@ -34,4 +45,3 @@ def sync_commission_status(*, commission: dict) -> Commission:
         commission.status = Commission.FULL
     commission.save()
     return commission
-
