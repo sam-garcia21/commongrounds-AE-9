@@ -3,26 +3,31 @@
 {% block content%}
 <h2>Project Detail</h2>
 <h2>Title: {{project.title}}</h2>
+<h4>Favorites: {{favorite_count}}</h4>
 <h4>Category: {{project.category.name}}</h4>
 <h4>Description: {{project.description}}</h4>
 <h4>Materials: {{project.materials}}</h4>
 <h3>steps: {{project.steps}}</h3>
 <h5>Created on: {{project.created_on}}</h5>
 <h5>Updated on: {{project.updated_on}}</h5>
+
+<form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" name="action" value="favorite">Favorite</button>
+    </form>
+
 <p><a href= "{% url 'diyprojects:diyprojects_list' %}">Return to Project List</a></p>
 
 <p><a href= "{% url 'diyprojects:diyprojects_update' project.pk %}">Edit this project</a></p>
 
-
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p}}
-    <input type="submit" value="Submit">
+<form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
+        {% csrf_token %}
+    <textarea name="comment" placeholder=""></textarea><br>
+    <button type="submit" name="action" value="review">Review</button>
 </form>
 
-{% for review in reviews %}
-        <p>{{ review.comment }}</p>
-        <img src="{{ review.image.image.url }}" alt="">
+{% for r in review %}
+        <p>{{ r.comment }}</p>
 {% empty %}
     <p>No reviews yet for this project.</p>
 {% endfor %}

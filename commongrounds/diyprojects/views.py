@@ -15,10 +15,46 @@ def project_list(request):
 
 def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
-    # favorite = project.favorites.count()
-    # ratings = project
+    favorite_count = project.favorites.count()
+    rating = project.ratings.all()
+    review = project.reviews.all
 
-    return render(request, 'diyprojects/diyprojects_detail.html', {"project" : project})
+    if request.method == "POST":
+        action = request.POST.get('action')
+
+        if action == 'favorite': #and request.user.is_authenticated:
+            project, created = Favorite.objects.get_or_create(
+                project=project,
+                #profile=request.user.profile
+                )
+            if not created:
+                project.delete()
+
+        elif action == 'review':
+            comment = request.POST.get('comment')
+            #user_profile = request.user.profile
+
+            ProjectReview.objects.create(
+                project=project, 
+                #reviewer=user_profile,
+                comment=comment)
+            
+        elif action == 'rate':
+            ProjectRating.objects.create(
+                project=project, 
+                #profile=user_profile,
+                score=request.POST.get('score'))
+
+        return redirect('diyprojects:diyprojects_detail', pk=project.pk)
+
+
+
+    return render(request, 'diyprojects/diyprojects_detail.html', {
+        "project" : project,
+        "favorite_count" : favorite_count,
+        "rating" : rating,
+        "review" : review,
+    })
         
 
 class ProjectAddView(CreateView):
