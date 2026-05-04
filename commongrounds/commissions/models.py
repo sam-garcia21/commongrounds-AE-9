@@ -78,6 +78,15 @@ class Job(models.Model):
         default=OPEN
     )
 
+    def isFull(self):
+        accepted_applications = JobApplication.objects.filter(
+            job=self).filter(status=JobApplication.ACCEPTED).count()
+        return self.manpower_required <= accepted_applications
+
+    def getOpenManpower(self):
+        return self.manpower_required - JobApplication.objects.filter(
+            job=self).filter(status=JobApplication.ACCEPTED).count()
+
     def __str__(self):
         return f'{self.commission.title} - {self.role}'
 

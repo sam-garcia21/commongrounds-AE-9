@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{user.profile.user}}
     <p> Commission Details</p>
     <p> {{ commission.title }} </p>
     <ul>
@@ -15,15 +14,26 @@
                 {% for job in jobs %}
                     <li>
                         {{ job.role }} - {{ job.get_status_display }}
-                        <p>{{ job.manpower_required }} person(s) in total needed</p>
+                        <p>{{ job.getOpenManpower }}/{{ job.manpower_required }} person(s) needed</p>
                         <form method="POST">
                             {% csrf_token %}
-                            <button type="submit" name="job_id" value="{{ job.id }}">Apply for Job</button>
+                            {% if job.isFull %}
+                                <button type="submit" name="job_id" value="{{ job.id }}" disabled>Apply for Job</button>
+                            {% else %}
+                                <button type="submit" name="job_id" value="{{ job.id }}">Apply for Job</button>
+                            {% endif %}
                         </form>
                     </li>
                 {% endfor %}
             </ul>
         </div>
     </ul>
-    <a href="{% url 'commissions:commission_list' %}">Check Other Commissions</a>
+    {% if commission.maker == user.profile %}
+    <div>
+        <a href="{% url 'commissions:commission_update' commission.pk %}">Edit Commissions</a>
+    </div>
+    {% endif %}
+    <div>
+        <a href="{% url 'commissions:commission_list' %}">Check Other Commissions</a>
+    <div>
 {% endblock %}

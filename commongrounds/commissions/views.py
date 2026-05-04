@@ -22,7 +22,8 @@ class CommissionDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['jobs'] = Job.objects.filter(commission=self.object)
-        context['commission_summary'] = get_commission_summary(commission=self.object)
+        context['commission_summary'] = get_commission_summary(
+            commission=self.object)
         return context
 
     def post(self, request, *args, **kwargs):
