@@ -11,7 +11,11 @@
     {% if book.is_available %}
         Available to Borrow
         <br>
-        <a href="{% url 'bookclub:book_borrow' book.pk %}"><button>Borrow this Book</button></a>
+        {% if user.profile != book.contributor %}
+            <a href="{% url 'bookclub:book_borrow' book.pk %}"><button>Borrow this Book</button></a>
+        {% else %}
+            <p> You are the owner of this book </p>
+        {% endif %}
     {% else %}
         Currently Not Available 
     {% endif %}
@@ -22,11 +26,11 @@
 {% endif %}
 <hr>
 
-<p>Bookmarks: {{ bookmark_count }}</p>
+<p>Bookmarks: {{ bookmarks_count }}</p>
 {% if user.is_authenticated %}
-    <form action="{% url 'bookclub:book_bookmark' book.pk %}" method="POST">
+    <form action="{% url 'bookclub:book_detail' book.pk %}" method="POST">
         {% csrf_token %}
-        <button type="submit">Bookmark</button>
+        <button type="submit" name="action" value="bookmark">Bookmark</button>
     </form>
 {% endif %}
 
@@ -44,7 +48,7 @@
     {% csrf_token %}
     <input type="text" name="title" placeholder="Review Title" required><br>
     <textarea name="comment" placeholder="Your review..."></textarea><br>
-    <button type="submit">Post Review</button>
+    <button type="submit" name="action" value="review">Post Review</button>
 </form>
 
 <hr>
