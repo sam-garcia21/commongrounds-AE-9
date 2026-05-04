@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Common Grounds</title>
-    </head>
-    <body>
-        <header>
-            <p>Common Grounds</p>
-        </header>
-        {% block content %}{% endblock %}
-    </body>
+
+<head>
+    <title>Common Grounds</title>
+</head>
+
+<body>
+    <header>
+        <p>Common Grounds</p>
+
+        <div>
+            <a href="/merchstore/items">Products</a> |
+
+            {% if user.is_authenticated %}
+            <span>Welcome, {{ user.username }}</span> |
+            <form action="/accounts/logout/" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+            {% else %}
+            <a href="/accounts/login/?next=/merchstore/items">Login</a>
+            {% endif %}
+        </div>
+
+        <hr>
+    </header>
+
+    {% block content %}{% endblock %}
+
+</body>
+
 </html>
