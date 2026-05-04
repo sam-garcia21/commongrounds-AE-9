@@ -45,8 +45,8 @@ def event_create(request):
         form = EventForm(request.POST, request.FILES)
         if form.is_valid():
             event = form.save(commit=False)
-            event.organizer.set([request.user.profile])
             event.save()
+            event.organizer.set([request.user.profile])
             form.save_m2m()
             return redirect('localevents:event-detail', pk=event.pk)
     else:
