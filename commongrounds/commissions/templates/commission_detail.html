@@ -4,10 +4,22 @@
     <p> Commission Details</p>
     <p> {{ commission.title }} </p>
     <ul>
-        <li> Created On: {{ commission.created_on }} </li>
-        <li> Last Updated: {{ commission.updated_on }} </li>
+        <li> Commissioned by: {{ commission.maker }} </li>
+        <li> Status: {{ commission.get_status_display }} (Last Updated on {{ commission.updated_on }})</li>
         <li> People Required: {{ commission.people_required }} </li>
+        <li> Created On: {{ commission.created_on }} </li>
         <li> Description: {{ commission.description }} </li>
+        <div>Jobs:
+            <ul>
+                {% for job in jobs %}
+                    <li>
+                        {{ job.role }} - {{ job.get_status_display }}
+                        {% csrf_token %}
+                        <button type="button" type="submit" name="job_id" value="{{ job.id }}">Apply for Job</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </ul>
     <a href="{% url 'commissions:commission_list' %}">Check Other Commissions</a>
 {% endblock %}

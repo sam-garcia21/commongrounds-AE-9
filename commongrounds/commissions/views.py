@@ -17,6 +17,19 @@ from .services import create_commission, sync_commission_status
 class CommissionDetailView(DetailView):
     model = Commission
     template_name = "commission_detail.html"
+    form_class = CommissionForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['jobs'] = Job.objects.filter(commission=self.object)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        job_id = request.POST.get('job_id')
+        job_application = JobApplication(job=Job.objects.get(
+            pk=job_id), applicant=request.user.profile)
+        job_application.save()
+        return self.get(request, *args, **kwargs)
 
 
 class CommissionListView(ListView):
@@ -94,11 +107,11 @@ class CommissionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
         if self.request.POST:
             context['formset'] = JobFormSet(
-            self.request.POST, self.request.FILES, prefix='job-form')
+                self.request.POST, self.request.FILES, prefix='job-form')
         else:
             context['formset'] = context['formset'] = JobFormSet(
                 queryset=Job.objects.filter(commission=self.object), prefix='job-form')
-            
+
         return context
 
     def form_valid(self, form):

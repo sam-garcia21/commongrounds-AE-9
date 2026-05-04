@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import modelformset_factory
-from .models import Commission, Job
+from .models import Commission, Job, JobApplication
 
 JobFormSet = modelformset_factory(
     Job,
@@ -18,3 +18,9 @@ class CommissionForm(forms.ModelForm):
     class Meta:
         model = Commission
         exclude = ['maker']
+
+class JobApplicationForm(forms.ModelForm):
+
+    class Meta:
+        model = JobApplication
+        fields = '__all__'
