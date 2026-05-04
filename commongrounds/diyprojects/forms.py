@@ -23,15 +23,3 @@ class ProjectUpdateForm(forms.ModelForm):
             'materials',
             'steps',
         ]
-
-class ProjectReviewForm(forms.ModelForm):
-    class Meta:
-        model = ProjectReview
-        fields = '__all__'
-
-class FavoriteForm(forms.ModelForm):
-    class Meta:
-        model = Favorite
-        fields = [
-            'project_status',
-        ]
