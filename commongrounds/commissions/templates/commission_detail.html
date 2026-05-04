@@ -6,7 +6,8 @@
     <ul>
         <li> Commissioned by: {{ commission.maker }} </li>
         <li> Status: {{ commission.get_status_display }} (Last Updated on {{ commission.updated_on }})</li>
-        <li> Currently need {{ manpower.total_manpower }} / {{ commission.people_required }} more people</li>
+        <li> Total manpower need: {{ commission.people_required }}</li>
+        <li> Currently need {{ manpower.open_manpower }} more person(s) </li>
         <li> Created On: {{ commission.created_on }} </li>
         <li> Description: {{ commission.description }} </li>
         <div>Jobs:
@@ -14,8 +15,10 @@
                 {% for job in jobs %}
                     <li>
                         {{ job.role }} - {{ job.get_status_display }}
-                        {% csrf_token %}
-                        <button type="button" type="submit" name="job_id" value="{{ job.id }}">Apply for Job</button>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="job_id" value="{{ job.id }}">Apply for Job</button>
+                        </form>
                     </li>
                 {% endfor %}
             </ul>

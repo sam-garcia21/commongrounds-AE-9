@@ -12,7 +12,18 @@
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form }}
+    {% for field in form %}
+        <div>
+        {% if field.name == 'maker' %}
+            {{ field.label_tag }} {{ profile.user }}
+            <div style="display:none">
+                {{ field }}
+            </div>
+        {% else %}
+            {{ field.label_tag }} {{ field }}
+        {% endif %}
+        </div>
+    {% endfor %}
     <p>Jobs:</p>
     {{ formset.management_form }}
     

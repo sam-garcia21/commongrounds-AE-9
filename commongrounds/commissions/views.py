@@ -76,6 +76,7 @@ class CommissionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['formset'] = JobFormSet(
             queryset=Job.objects.none(), prefix='job-form')
+        context['profile'] = self.request.user.profile
         return context
 
     def post(self, request, *args, **kwargs):

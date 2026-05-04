@@ -5,8 +5,7 @@ from .models import Commission, Job, JobApplication
 @transaction.atomic
 def create_commission(*, author: dict, data: dict, jobs_data: list[dict]) -> Commission:
     commission = Commission.objects.create(
-        **data,
-        maker=author
+        **data
     )
     job_instances = []
     for job in jobs_data:

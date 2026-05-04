@@ -11,13 +11,13 @@ JobFormSet = modelformset_factory(
 
 
 class CommissionForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     class Meta:
         model = Commission
-        exclude = ['maker']
+        fields = '__all__'
+
 
 class JobApplicationForm(forms.ModelForm):
 

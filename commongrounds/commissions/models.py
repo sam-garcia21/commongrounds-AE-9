@@ -18,9 +18,13 @@ class CommissionType(models.Model):
 class Commission(models.Model):
     OPEN = 0
     FULL = 1
+    COMPLETED = 2
+    DISCONTINUED = 3
     STATUS_CHOICES = {
         OPEN: "Open",
         FULL: "Full",
+        COMPLETED: "Completed",
+        DISCONTINUED: "Discontinued",
     }
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
