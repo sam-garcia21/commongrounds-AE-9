@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<script src="{% static 'commissions/js/create.js' %}"></script>
+<p> {% static 'commissions/js/create.js' %} </p>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <p>Jobs:</p>
+    {{ formset.management_form }}
+    
+    <div id="create-list">
+    {% for form in formset %}
+        <div class="form-row">
+            {{ form.id }} 
+            {{ form.as_p }}
+            <div style="display:none;">
+                {{ form.DELETE }}
+            </div>
+            <button type="button" class="remove-button">Remove Job</button>
+        </div>
+    {% endfor %}
+    </div>
+
+    <div id="empty-form" style="display:none;">
+        <div class="form-row">
+            {{ form.id }} 
+            {{ formset.empty_form.as_p }}
+            <div style="display:none;">
+                {{ form.DELETE }}
+            </div>
+            <button type="button" class="remove-button">Remove Job</button>
+        </div>
+    </div>
+
+    <button type="button" id="add-more">Add Another</button>
+    <input type="submit" name="submit" value="Save Form">
+</form>
+
+{% endblock %}

@@ -34,6 +34,7 @@ class Commission(models.Model):
         Profile,
         on_delete=models.CASCADE,
         related_name='commisions',
+        null=True
     )
     people_required = models.IntegerField()
     status = models.IntegerField(
@@ -106,7 +107,7 @@ class JobApplication(models.Model):
     applied_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.applicant.name} - {self.job.commission} ({self.job.role})'
+        return f'{self.applicant.display_name} - {self.job.commission} ({self.job.role})'
 
     class Meta:
         ordering = ['status', '-applied_on']
