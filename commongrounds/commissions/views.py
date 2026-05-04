@@ -11,7 +11,7 @@ from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Commission, Job, JobApplication
 from .forms import CommissionForm, JobFormSet
-from .services import create_commission, sync_commission_status
+from .services import create_commission, sync_commission_status, get_commission_summary, apply_to_job
 
 
 class CommissionDetailView(DetailView):
@@ -22,13 +22,13 @@ class CommissionDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['jobs'] = Job.objects.filter(commission=self.object)
+        context['manpower'] = get_commission_summary(self.object)
         return context
 
     def post(self, request, *args, **kwargs):
         job_id = request.POST.get('job_id')
-        job_application = JobApplication(job=Job.objects.get(
+        apply_to_job(job=Job.objects.get(
             pk=job_id), applicant=request.user.profile)
-        job_application.save()
         return self.get(request, *args, **kwargs)
 
 

@@ -6,7 +6,7 @@
     <ul>
         <li> Commissioned by: {{ commission.maker }} </li>
         <li> Status: {{ commission.get_status_display }} (Last Updated on {{ commission.updated_on }})</li>
-        <li> People Required: {{ commission.people_required }} </li>
+        <li> Currently need {{ manpower.total_manpower }} / {{ commission.people_required }} more people</li>
         <li> Created On: {{ commission.created_on }} </li>
         <li> Description: {{ commission.description }} </li>
         <div>Jobs:

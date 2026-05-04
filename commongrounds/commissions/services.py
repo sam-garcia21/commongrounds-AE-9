@@ -58,6 +58,8 @@ def get_commission_summary(commission) -> dict:
             job=job, status=JobApplication.ACCEPTED)
         current_manpower += accepted_job_application.count()
     open_manpower = total_manpower - current_manpower
+    commission.people_required = total_manpower
+    commission.save()
     return {"total_manpower": total_manpower, "open_manpower": open_manpower}
         
         
