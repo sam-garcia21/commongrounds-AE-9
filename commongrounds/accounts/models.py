@@ -6,7 +6,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     display_name = models.CharField(max_length=63)
     email_address = models.EmailField()
-    role = models.CharField(max_length=50, default="Regular User")
+    role = models.CharField(max_length=50, default="Regular")
 
     def __str__(self):
         return self.display_name 
