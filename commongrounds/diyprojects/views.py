@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.decorators import login_required
 
 from .models import Project, ProjectCategory, ProjectReview, ProjectRating, Favorite
 from .forms import ProjectForm, ProjectUpdateForm,ProjectReviewForm
@@ -17,32 +18,40 @@ def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
     favorite_count = project.favorites.count()
     rating = project.ratings.all()
-    review = project.reviews.all
+    review = project.reviews.all()
+
+    if project.ratings.count() != 0:
+        i = 0
+        for r in rating:
+            i += r.score
+        avg_rating = i//project.ratings.count()
+    else:
+        avg_rating = 0
 
     if request.method == "POST":
         action = request.POST.get('action')
 
-        if action == 'favorite': #and request.user.is_authenticated:
-            project, created = Favorite.objects.get_or_create(
+        if action == 'favorite' and request.user.is_authenticated:
+            favorite, created = Favorite.objects.get_or_create(
                 project=project,
-                #profile=request.user.profile
+                profile=request.user.profile,
                 )
             if not created:
-                project.delete()
+                favorite.delete()
 
         elif action == 'review':
             comment = request.POST.get('comment')
-            #user_profile = request.user.profile
+            user_profile = request.user.profile
 
             ProjectReview.objects.create(
                 project=project, 
-                #reviewer=user_profile,
+                reviewer=request.user.profile,
                 comment=comment)
             
         elif action == 'rate':
             ProjectRating.objects.create(
                 project=project, 
-                #profile=user_profile,
+                profile=request.user.profile,
                 score=request.POST.get('score'))
 
         return redirect('diyprojects:diyprojects_detail', pk=project.pk)
@@ -54,6 +63,7 @@ def project_detail(request, pk):
         "favorite_count" : favorite_count,
         "rating" : rating,
         "review" : review,
+        "avg_rating" : avg_rating,
     })
         
 
@@ -61,7 +71,6 @@ class ProjectAddView(CreateView):
     model = Project
     template_name = 'diyprojects/diyprojects_add.html'
     form_class = ProjectForm
-    template_name = 'diyprojects/diyprojects_list.html'
 
 
 class ProjectUpdateView(UpdateView):

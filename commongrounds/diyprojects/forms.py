@@ -7,6 +7,7 @@ class ProjectForm(forms.ModelForm):
         fields = [
             'title',
             'category',
+            'profile',
             'description',
             'materials',
             'steps',

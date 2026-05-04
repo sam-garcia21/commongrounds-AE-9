@@ -5,11 +5,15 @@
 <h2>Title: {{project.title}}</h2>
 <h4>Favorites: {{favorite_count}}</h4>
 <h4>Category: {{project.category.name}}</h4>
+<h4>Creator: {{project.profile}}</h4>
+<h4>Rating: {{avg_rating}} </h4>
 <h4>Description: {{project.description}}</h4>
 <h4>Materials: {{project.materials}}</h4>
 <h3>steps: {{project.steps}}</h3>
 <h5>Created on: {{project.created_on}}</h5>
 <h5>Updated on: {{project.updated_on}}</h5>
+
+
 
 <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
         {% csrf_token %}
@@ -24,6 +28,12 @@
         {% csrf_token %}
     <textarea name="comment" placeholder=""></textarea><br>
     <button type="submit" name="action" value="review">Review</button>
+</form>
+
+<form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
+        {% csrf_token %}
+    <textarea name="score" placeholder=""></textarea><br>
+    <button type="submit" name="action" value="rate">Rate</button>
 </form>
 
 {% for r in review %}
