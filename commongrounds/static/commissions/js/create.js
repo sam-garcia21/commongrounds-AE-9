@@ -18,8 +18,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const removeBtn = newFormRow.querySelector('.remove-button');
         removeBtn.addEventListener('click', () => {
             const formRow = newFormRow; 
-            const deleteCheckbox = formRow.querySelector('input[name$="-DELETE"]');
-            deleteCheckbox.checked = true; 
+            const removeInput = formRow.querySelector('input[name$="-DELETE"]');
+            removeInput.checked = true; 
             formRow.style.display = 'none'; 
         });
         

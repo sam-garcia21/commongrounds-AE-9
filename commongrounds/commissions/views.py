@@ -69,6 +69,8 @@ class CommissionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         commission = CommissionForm(request.POST)
         job_formset = JobFormSet(
             request.POST, request.FILES, prefix='job-form')
+        for job in job_formset:
+            print(job.data.get('DELETE'))
 
         if commission.is_valid() and job_formset.is_valid():
             new_commission = create_commission(author=request.user.profile,

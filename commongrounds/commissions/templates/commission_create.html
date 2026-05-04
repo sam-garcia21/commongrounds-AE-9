@@ -14,10 +14,17 @@
     {% for form in formset %}
         <div class="form-row">
             {{ form.id }} 
-            {{ form.as_p }}
-            <div style="display:none;">
-                {{ form.DELETE }}
-            </div>
+            {% for field in form.visible_fields %}
+                {% if field.name == 'DELETE'%}
+                    <div style="display:none;">
+                        {{ form.DELETE }}
+                    </div>
+                {% else %}
+                <div>
+                    {{field.label_tag}} {{field}}
+                </div>
+                {% endif %}
+            {% endfor %}
             <button type="button" class="remove-button">Remove Job</button>
         </div>
     {% endfor %}
@@ -25,11 +32,18 @@
 
     <div id="empty-form" style="display:none;">
         <div class="form-row">
-            {{ form.id }} 
-            {{ formset.empty_form.as_p }}
-            <div style="display:none;">
-                {{ form.DELETE }}
-            </div>
+            {{ formset.empty_form.id }} 
+            {% for field in formset.empty_form.visible_fields %}
+                {% if field.name == 'DELETE'%}
+                    <div style="display:none;">
+                        {{ formset.empty_form.DELETE }}
+                    </div>
+                {% else %}
+                <div>
+                    {{field.label_tag}} {{field}}
+                </div>
+                {% endif %}
+            {% endfor %}
             <button type="button" class="remove-button">Remove Job</button>
         </div>
     </div>

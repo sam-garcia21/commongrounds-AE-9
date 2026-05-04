@@ -10,6 +10,7 @@ def create_commission(*, author: dict, data: dict, jobs_data: list[dict]) -> Com
     )
     job_instances = []
     for job in jobs_data:
+        print(job.get('role'), job.get('DELETE'))
         if not job or job.get('DELETE'):
             continue
         del job['DELETE']
