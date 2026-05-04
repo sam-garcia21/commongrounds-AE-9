@@ -3,7 +3,13 @@
 
 {% block content %}
 <script src="{% static 'commissions/js/create.js' %}"></script>
-<p> {% static 'commissions/js/create.js' %} </p>
+
+{% if commission %}
+<p>Update Commission</p>
+{% else %}
+<p>Create New Commission</p>
+{% endif %}
+
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form }}
@@ -25,7 +31,9 @@
                 </div>
                 {% endif %}
             {% endfor %}
+            {% if not commission %}
             <button type="button" class="remove-button">Remove Job</button>
+            {% endif %}
         </div>
     {% endfor %}
     </div>
@@ -44,11 +52,15 @@
                 </div>
                 {% endif %}
             {% endfor %}
+            {% if not commission %}
             <button type="button" class="remove-button">Remove Job</button>
+            {% endif %}
         </div>
     </div>
 
-    <button type="button" id="add-more">Add Another</button>
+    {% if not commission %}
+    <button type="button" id="add-more">Add Job</button>
+    {% endif %}
     <input type="submit" name="submit" value="Save Form">
 </form>
 

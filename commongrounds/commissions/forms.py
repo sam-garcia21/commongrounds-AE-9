@@ -1,20 +1,14 @@
 from django import forms
-from django.forms import modelformset_factory, BaseModelFormSet, HiddenInput
-
+from django.forms import modelformset_factory
 from .models import Commission, Job
 
-# class HiddenDeleteFormSet(BaseModelFormSet):
-#     def add_fields(self, form, index):
-#         super().add_fields(form, index)
-#         form.fields['DELETE'].widget = HiddenInput()
-
 JobFormSet = modelformset_factory(
-    Job, 
-    fields=['role', 'manpower_required'], 
-    # formset=HiddenDeleteFormSet, 
+    Job,
+    fields=['role', 'manpower_required'],
     can_delete=True,
-    extra=3
+    extra=0
 )
+
 
 class CommissionForm(forms.ModelForm):
 
