@@ -21,9 +21,14 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('diyprojects/', include('diyprojects.urls', namespace="diyprojects")),
+    path('', include('diyprojects.urls', namespace="diyprojects")),
+    path('localevents/', include('localevents.urls', namespace="localevents")),
     path('admin/', admin.site.urls),
     path('bookclub/', include('bookclub.urls', namespace="bookclub")),
     path('commissions/', include('commissions.urls', namespace="commissions")),
+    path('merchstore/', include('merchstore.urls', namespace="merchstore")),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

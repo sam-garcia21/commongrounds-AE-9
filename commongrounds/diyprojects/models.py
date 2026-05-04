@@ -9,8 +9,8 @@ class ProjectCategory(models.Model):
 
     def __str__(self):
         return self.name
-    
-    class Meta: 
+
+    class Meta:
         ordering = ['name']
         verbose_name = 'projectcategory'
         verbose_name_plural = 'project categories'
@@ -20,6 +20,8 @@ class Project(models.Model):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(ProjectCategory, on_delete=models.SET_NULL, related_name='project', null=True, blank=True)
     #profile = models.ForeignKey(Project, on_delete=models.SET_NULL, related_name='project', null=True, blank=True)
+    category = models.ForeignKey(
+        ProjectCategory, on_delete=models.SET_NULL, related_name='category', null=True, blank=True)
     description = models.TextField()
     materials = models.TextField()
     steps = models.TextField()
@@ -28,15 +30,16 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def get_absolute_url(self):
         return reverse('diyprojects:diyprojects_detail', args=[str(self.id)])
-    
-    class Meta: 
+
+    class Meta:
         ordering = ['-created_on']
         verbose_name = 'project'
         verbose_name_plural = 'project'
-        
+
+
 class Favorite(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='favorites', null=True, blank=True)
     #profile = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project', null=True, blank=True)
@@ -60,3 +63,4 @@ class ProjectRating(models.Model):
             MinValueValidator(1)
         ]
     )
+

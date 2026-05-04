@@ -61,6 +61,7 @@ class ProjectAddView(CreateView):
     model = Project
     template_name = 'diyprojects/diyprojects_add.html'
     form_class = ProjectForm
+    template_name = 'diyprojects/diyprojects_list.html'
 
 
 class ProjectUpdateView(UpdateView):

@@ -9,7 +9,9 @@ urlpatterns = [
     path('project/<int:pk>', project_detail, name='diyprojects_detail'),
     path('project/add', ProjectAddView.as_view(), name='diyprojects_add'),
     path('project/<int:pk>/edit', ProjectUpdateView.as_view(), name='diyprojects_update'),
-
+    path('diyprojects/projects', ProjectListView.as_view(), name='diyprojects_list'),
+    path('diyprojects/project/<int:pk>',
+         ProjectDetailView.as_view(), name='diyprojects_detail'),
 ]
 
 app_name = "diyprojects"

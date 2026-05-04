@@ -38,6 +38,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'bookclub',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'diyprojects',
     'commissions',
+    'merchstore',
+    'localevents',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'commongrounds.urls'
@@ -129,3 +133,8 @@ MEDIA_URL = '/media/'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = [os.path.join(BASE_DIR, 'static')]
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
