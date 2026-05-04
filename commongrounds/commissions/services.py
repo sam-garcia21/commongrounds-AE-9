@@ -30,7 +30,7 @@ def apply_to_job(*, applicant: dict, job: dict) -> JobApplication:
             applicant=applicant,
             job=job,
         )
-        return JobApplication
+        return job_application
     return JobApplication.objects.none
 
 
@@ -45,3 +45,19 @@ def sync_commission_status(*, commission: dict) -> Commission:
         commission.status = Commission.FULL
     commission.save()
     return commission
+
+
+def get_commission_summary(commission) -> dict:
+    total_manpower = 0
+    open_manpower = 0
+    current_manpower = 0
+    jobs = Job.objects.filter(commission=commission)
+    for job in jobs:
+        total_manpower += job.manpower_required
+        accepted_job_application = JobApplication.objects.filter(
+            job=job, status=JobApplication.ACCEPTED)
+        current_manpower += accepted_job_application.count()
+    open_manpower = total_manpower - current_manpower
+    return {"total_manpower": total_manpower, "open_manpower": open_manpower}
+        
+        
