@@ -4,7 +4,7 @@ from .models import Commission, Job
 
 JobFormSet = modelformset_factory(
     Job,
-    fields=['role', 'manpower_required'],
+    fields=['role', 'manpower_required',],
     can_delete=True,
     extra=0
 )

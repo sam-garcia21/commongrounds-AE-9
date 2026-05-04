@@ -11,7 +11,7 @@ from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Commission, Job, JobApplication
 from .forms import CommissionForm, JobFormSet
-from .services import create_commission
+from .services import create_commission, sync_commission_status
 
 
 class CommissionDetailView(DetailView):
@@ -108,6 +108,7 @@ class CommissionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             response = super().form_valid(form)
             formset.instance = self.object
             formset.save()
+            sync_commission_status(commission=self.object)
             return response
         else:
             return super().form_invalid(form)

@@ -23,6 +23,15 @@ def create_commission(*, author: dict, data: dict, jobs_data: list[dict]) -> Com
     Job.objects.bulk_create(job_instances)
     return commission
 
+def sync_commission_status(*, commission: dict) -> Commission:
+    jobs = Job.objects.filter(commission=commission)
+    isFull = True
+    for job in jobs:
+        print(job.status)
+        if (job.status != Job.FULL):
+            isFull = False
+    if isFull:
+        commission.status = Commission.FULL
+    commission.save()
+    return commission
 
-# @transaction.atomic
-# def update():
