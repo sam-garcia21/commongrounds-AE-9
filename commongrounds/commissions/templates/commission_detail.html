@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {{user.profile.user}}
     <p> Commission Details</p>
     <p> {{ commission.title }} </p>
     <ul>
         <li> Commissioned by: {{ commission.maker }} </li>
         <li> Status: {{ commission.get_status_display }} (Last Updated on {{ commission.updated_on }})</li>
-        <li> Total manpower need: {{ commission.people_required }}</li>
-        <li> Currently need {{ manpower.open_manpower }} more person(s) </li>
         <li> Created On: {{ commission.created_on }} </li>
         <li> Description: {{ commission.description }} </li>
+        <li> {{commission_summary.open_manpower}} / {{commission_summary.total_manpower}} job slots remaining <li>
         <div>Jobs:
             <ul>
                 {% for job in jobs %}
                     <li>
                         {{ job.role }} - {{ job.get_status_display }}
+                        <p>{{ job.manpower_required }} person(s) in total needed</p>
                         <form method="POST">
                             {% csrf_token %}
                             <button type="submit" name="job_id" value="{{ job.id }}">Apply for Job</button>

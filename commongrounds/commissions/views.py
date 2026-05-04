@@ -22,14 +22,17 @@ class CommissionDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['jobs'] = Job.objects.filter(commission=self.object)
-        context['manpower'] = get_commission_summary(self.object)
+        context['commission_summary'] = get_commission_summary(commission=self.object)
         return context
 
     def post(self, request, *args, **kwargs):
         job_id = request.POST.get('job_id')
-        apply_to_job(job=Job.objects.get(
-            pk=job_id), applicant=request.user.profile)
-        return self.get(request, *args, **kwargs)
+        hasApplied = apply_to_job(applicant=request.user.profile, job=Job.objects.get(
+            pk=job_id))
+        if (hasApplied):
+            return redirect('commissions:commission_list')
+        else:
+            return self.get(request, *args, **kwargs)
 
 
 class CommissionListView(ListView):

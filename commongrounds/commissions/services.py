@@ -1,9 +1,10 @@
 from django.db import transaction
 from .models import Commission, Job, JobApplication
+from accounts.models import Profile
 
 
 @transaction.atomic
-def create_commission(*, author: dict, data: dict, jobs_data: list[dict]) -> Commission:
+def create_commission(*, author: Profile, data: Commission, jobs_data: list[Job]) -> Commission:
     commission = Commission.objects.create(
         **data
     )
@@ -23,17 +24,17 @@ def create_commission(*, author: dict, data: dict, jobs_data: list[dict]) -> Com
     return commission
 
 
-def apply_to_job(*, applicant: dict, job: dict) -> JobApplication:
-    if JobApplication.objects.filter(job=job, applicant=applicant).exists() and job.status == Job.OPEN:
+def apply_to_job(*, applicant: Profile, job: Job) -> bool:
+    if not JobApplication.objects.filter(job=job).filter(applicant=applicant).exists() and job.status == Job.OPEN:
         job_application = JobApplication.objects.create(
             applicant=applicant,
             job=job,
         )
-        return job_application
-    return JobApplication.objects.none
+        return True
+    return False
 
 
-def sync_commission_status(*, commission: dict) -> Commission:
+def sync_commission_status(*, commission: Commission) -> Commission:
     jobs = Job.objects.filter(commission=commission)
     isFull = True
     for job in jobs:
@@ -46,7 +47,7 @@ def sync_commission_status(*, commission: dict) -> Commission:
     return commission
 
 
-def get_commission_summary(commission) -> dict:
+def get_commission_summary(*, commission: Commission) -> dict:
     total_manpower = 0
     open_manpower = 0
     current_manpower = 0
