@@ -15,6 +15,7 @@
                     <li>
                         {{ job.role }} - {{ job.get_status_display }}
                         <p>{{ job.getOpenManpower }}/{{ job.manpower_required }} person(s) needed</p>
+                        {% if user.is_authenticated %}
                         <form method="POST">
                             {% csrf_token %}
                             {% if job.isFull %}
@@ -23,6 +24,7 @@
                                 <button type="submit" name="job_id" value="{{ job.id }}">Apply for Job</button>
                             {% endif %}
                         </form>
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>

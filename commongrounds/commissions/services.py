@@ -6,7 +6,7 @@ from accounts.models import Profile
 @transaction.atomic
 def create_commission(*, author: Profile, data: Commission, jobs_data: list[Job]) -> Commission:
     commission = Commission.objects.create(
-        **data
+        **data,
     )
     job_instances = []
     for job in jobs_data:
