@@ -59,7 +59,7 @@ class ProjectRating(models.Model):
         default=1,
         validators=[
             MaxValueValidator(10),
-            MinValueValidator(1)
+            MinValueValidator(1),
         ]
     )
 

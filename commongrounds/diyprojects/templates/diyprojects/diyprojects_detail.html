@@ -22,19 +22,25 @@
 
 <p><a href= "{% url 'diyprojects:diyprojects_list' %}">Return to Project List</a></p>
 
-<p><a href= "{% url 'diyprojects:diyprojects_update' project.pk %}">Edit this project</a></p>
+{% if can_update %}
+    <p><a href= "{% url 'diyprojects:diyprojects_update' project.pk %}">Edit this project</a></p>
+{% endif %}
 
-<form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
-        {% csrf_token %}
-    <textarea name="comment" placeholder=""></textarea><br>
-    <button type="submit" name="action" value="review">Review</button>
-</form>
+{% if user.is_authenticated %}
+    <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
+            {% csrf_token %}
+        <textarea name="comment" placeholder=""></textarea><br>
+        <button type="submit" name="action" value="review">Review</button>
+    </form>
+{% endif %}
 
-<form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
-        {% csrf_token %}
-    <textarea name="score" placeholder=""></textarea><br>
-    <button type="submit" name="action" value="rate">Rate</button>
-</form>
+{% if user.is_authenticated %}
+    <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
+            {% csrf_token %}
+        <textarea name="score" placeholder=""></textarea><br>
+        <button type="submit" name="action" value="rate">Rate</button>
+    </form>
+{% endif %}
 
 {% for r in review %}
         <p>{{ r.comment }}</p>

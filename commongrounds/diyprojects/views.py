@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 
 from .models import Project, ProjectCategory, ProjectReview, ProjectRating, Favorite
@@ -56,7 +57,9 @@ def project_detail(request, pk):
 
         return redirect('diyprojects:diyprojects_detail', pk=project.pk)
 
-
+    can_update = False 
+    if request.user.is_authenticated and project.profile == request.user.profile:
+        can_update = True
 
     return render(request, 'diyprojects/diyprojects_detail.html', {
         "project" : project,
@@ -64,16 +67,39 @@ def project_detail(request, pk):
         "rating" : rating,
         "review" : review,
         "avg_rating" : avg_rating,
+        "can_update" : can_update,
     })
-        
 
-class ProjectAddView(CreateView):
-    model = Project
-    template_name = 'diyprojects/diyprojects_add.html'
-    form_class = ProjectForm
+@login_required
+def project_create(request):
+    if request.user.profile.role != "Project Creator":
+        return render(request, "403.html")
 
+    if request.method == "POST":
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.profile = request.user
+            project.save()
+            return redirect('diyprojects:diyprojects_detail', pk=project.pk)
+    else:
+        form = ProjectForm()
 
-class ProjectUpdateView(UpdateView):
-    model = Project
-    template_name = 'diyprojects/diyprojects_update.html'
-    form_class = ProjectUpdateForm
+    return render(request, "diyprojects/diyprojects_add.html", {"form" : form})
+
+@login_required
+def project_update(request, pk):
+    if request.user.profile.role != "Project Creator":
+        return render(request, "403.html")
+    
+    project = get_object_or_404(Project, pk=pk)
+
+    if request.method == "POST":
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return redirect('diyprojects:diyprojects_detail', pk=project.pk)
+    else:
+        form = ProjectForm(instance=project)
+
+    return render(request, "diyprojects/diyprojects_update.html", {"form" : form})
