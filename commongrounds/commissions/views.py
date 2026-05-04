@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.db import transaction
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,6 +11,7 @@ from django.views.generic.edit import CreateView
 
 from .models import Commission, Job, JobApplication
 from .forms import CommissionForm, JobFormSet
+from .services import create_commission
 
 
 class CommissionDetailView(DetailView):
@@ -41,10 +41,11 @@ class CommissionListView(ListView):
             context['logged_in'] = False
             context['all_commissions_list'] = Commission.objects.all()
         return context
-    
+
+
 class CommissionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     login_url = '/accounts/login/'
-    
+
     model = Commission
     template_name = 'commission_create.html'
     form_class = CommissionForm
@@ -56,27 +57,25 @@ class CommissionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def get_initial(self):
         return {'maker': self.request.user}
-    
+
     def get_context_data(self, **kwargs):
         self.object = None
         context = super().get_context_data(**kwargs)
-        context['formset'] = JobFormSet(queryset=Job.objects.none(), prefix='job-form')
+        context['formset'] = JobFormSet(
+            queryset=Job.objects.none(), prefix='job-form')
         return context
 
     def post(self, request, *args, **kwargs):
         commission = CommissionForm(request.POST)
-        job_formset = JobFormSet(request.POST, request.FILES, prefix='job-form')
-        
+        job_formset = JobFormSet(
+            request.POST, request.FILES, prefix='job-form')
+
         if commission.is_valid() and job_formset.is_valid():
-            with transaction.atomic():
-                commission.save()
-                for form in job_formset:
-                    form.instance.commission = commission.instance
-                job_formset.save()
-                commission.save()
-            return redirect(self.get_success_url(self))
-        
+            new_commission = create_commission(author=request.user.profile,
+                              data=commission.cleaned_data, jobs_data=job_formset.cleaned_data)
+            return redirect(new_commission.get_absolute_url())
+
         return self.render_to_response(self.get_context_data(formset=job_formset))
-    
+
     def get_success_url(self):
         return reverse_lazy('commissions:commission_detail', kwargs={'pk': self.object.commission.pk})
