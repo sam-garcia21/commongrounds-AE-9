@@ -14,12 +14,12 @@
 
             {% if user.is_authenticated %}
             <span>Welcome, {{ user.username }}</span> |
-            <form action="/accounts/logout/" method="post" style="display:inline;">
+            <form action="{% url 'logout' %}" method="POST" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit">Logout</button>
             </form>
             {% else %}
-            <a href="/accounts/login/?next=/merchstore/items">Login</a>
+            <a href="/accounts/login/">Login</a>
             {% endif %}
         </div>
 
