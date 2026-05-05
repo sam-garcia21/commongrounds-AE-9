@@ -40,7 +40,7 @@ def product_create(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save(commit=False)
-            product.owner = request.user
+            product.owner = request.user.profile
             product.save()
             return redirect(f"/merchstore/item/{product.id}")
     else:
@@ -51,8 +51,7 @@ def product_create(request):
 def product_update(request, id):
     product = Product.objects.get(id=id)
 
-    # Only owner can edit
-    if product.owner != request.user:
+    if product.owner != request.user.profile:
         return redirect('/merchstore/items')
 
     if request.method == "POST":
@@ -60,7 +59,7 @@ def product_update(request, id):
         if form.is_valid():
             updated_product = form.save(commit=False)
 
-            # Auto update status based on stock
+            
             if updated_product.stock == 0:
                 updated_product.status = 'out'
             else:
@@ -72,14 +71,14 @@ def product_update(request, id):
         form = ProductForm(instance=product)
 @login_required
 def cart_view(request):
-    transactions = Transaction.objects.filter(buyer=request.user)
+    transactions = Transaction.objects.filter(buyer=request.user.profile)
 
     return render(request, "merchstore/cart.html", {
         "transactions": transactions
     })
 @login_required
 def transactions_view(request):
-    transactions = Transaction.objects.filter(product__owner=request.user)
+    transactions = Transaction.objects.filter(product__owner=request.user.profile)
 
     grouped = defaultdict(list)
 
@@ -92,7 +91,7 @@ def transactions_view(request):
 
 @login_required
 def cart_view(request):
-    transactions = Transaction.objects.filter(buyer=request.user)
+    transactions = Transaction.objects.filter(buyer=request.user.profile)
 
     grouped = defaultdict(list)
 

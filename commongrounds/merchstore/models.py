@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from accounts.models import Profile
 
 
 class ProductType(models.Model):
@@ -28,7 +28,7 @@ class Product(models.Model):
         null=True
     )
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     product_image = models.ImageField(upload_to='products/', null=True, blank=True)
 
@@ -61,7 +61,7 @@ class Transaction(models.Model):
         ('delivered', 'Delivered'),
     ]
 
-    buyer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    buyer = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 

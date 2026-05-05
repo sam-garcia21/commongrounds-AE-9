@@ -8,7 +8,7 @@ class AuthenticatedPurchaseStrategy(BaseTransactionStrategy):
     def execute(self, request, product, form):
         transaction = form.save(commit=False)
         transaction.product = product
-        transaction.buyer = request.user
+        transaction.buyer = request.user.profile
         transaction.status = 'cart'
         transaction.save()
         amount = transaction.amount
