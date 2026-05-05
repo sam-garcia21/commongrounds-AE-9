@@ -27,9 +27,10 @@
 {% endif %}
 
 {% if user.is_authenticated %}
-    <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
+    <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-        <textarea name="comment" placeholder=""></textarea><br>
+        <p><textarea name="comment" placeholder=""></textarea></p>
+        <p><input type="file" name="image" accept="image/*"></p>
         <button type="submit" name="action" value="review">Review</button>
     </form>
 {% endif %}
@@ -37,13 +38,16 @@
 {% if user.is_authenticated %}
     <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
             {% csrf_token %}
-        <textarea name="score" placeholder=""></textarea><br>
-        <button type="submit" name="action" value="rate">Rate</button>
+        <textarea name="score" placeholder=""></textarea>
+       <p> <button type="submit" name="action" value="rate">Rate</button></p>
     </form>
 {% endif %}
 
 {% for r in review %}
         <p>{{ r.comment }}</p>
+        <p>{% if r.image %}
+        <img src="{{ r.image.url }}" alt="">
+        {% endif %}</p>
 {% empty %}
     <p>No reviews yet for this project.</p>
 {% endfor %}

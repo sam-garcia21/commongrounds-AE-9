@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 
 from .models import Project, ProjectCategory, ProjectReview, ProjectRating, Favorite
-from .forms import ProjectForm, ProjectUpdateForm,ProjectReviewForm
+from .forms import ProjectForm, ProjectUpdateForm
 
 
 def project_list(request):
@@ -42,12 +42,14 @@ def project_detail(request, pk):
 
         elif action == 'review':
             comment = request.POST.get('comment')
+            image = request.FILES.get('image')
             user_profile = request.user.profile
 
             ProjectReview.objects.create(
                 project=project, 
                 reviewer=request.user.profile,
-                comment=comment)
+                comment=comment,
+                image=image)
             
         elif action == 'rate':
             ProjectRating.objects.create(
@@ -79,7 +81,6 @@ def project_create(request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
-            project.profile = request.user
             project.save()
             return redirect('diyprojects:diyprojects_detail', pk=project.pk)
     else:
