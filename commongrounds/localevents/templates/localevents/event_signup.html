@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Sign Up for {{ event.title }}</h1>
+<p><strong>Location:</strong> {{ event.location }}</p>
+<p><strong>When:</strong> {{ event.start_time }} – {{ event.end_time }}</p>
+<p>{{ event.description }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign Up</button>
+</form>
+
+{% endblock %}
