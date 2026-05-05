@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+    {% if book_list %}
+        <h2>Books Contributed</h2>
+            <h3>
+                {% for book in book_list %}
+                    <li><a href= "{{ book.get_absolute_url }}">{{book.title}}</a> - {{book.genre.name}}</li>
+                {% endfor %}
+            </h3>
+    {% endif %}
+
+    {% if commission_list %}
+        <h2>Commissions Created</h2>
+            <h3>
+                {% for commission in commission_list %}
+                    <li><a href= "{{ commission.get_absolute_url }}">{{commission.title}}</a> - {{commission.commission_type.name}}</li>
+                {% endfor %}
+            </h3>
+    {% endif %}
+
+    {% if project_list %}
+        <h2>Projects Created</h2>
+            <h3>
+                {% for project in project_list %}
+                    <li><a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
+                {% endfor %}
+            </h3>
+    {% endif %}
+{% endif %}
+{% endblock %}
