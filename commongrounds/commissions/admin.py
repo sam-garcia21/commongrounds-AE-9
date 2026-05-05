@@ -6,8 +6,10 @@ from .models import Commission, CommissionType, Job, JobApplication
 class CommissionInline(admin.TabularInline):
     model = Commission
 
+
 class JobInline(admin.TabularInline):
     model = Job
+
 
 class JobApplicationInline(admin.TabularInline):
     model = JobApplication
@@ -30,17 +32,21 @@ class CommissionAdmin(admin.ModelAdmin):
         })
     ]
 
+
 class CommissionAdmin(admin.ModelAdmin):
     model = Commission
     inlines = [JobInline]
+
 
 class CommissionTypeAdmin(admin.ModelAdmin):
     model = CommissionType
     inlines = [CommissionInline]
 
+
 class JobAdmin(admin.ModelAdmin):
     model = Job
     inlines = [JobApplicationInline]
+
 
 class JobApplicationAdmin(admin.ModelAdmin):
     model = JobApplication
