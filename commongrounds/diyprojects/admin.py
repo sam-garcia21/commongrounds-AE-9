@@ -21,7 +21,7 @@ class ProjectAdmin(admin.ModelAdmin):
     model = Project
 
 
-admin.site.register(Profile, ProfileAdmin)
+
 admin.site.register(ProjectCategory, ProjectCategoryAdmin)
 admin.site.register(Project, ProjectAdmin)
 
