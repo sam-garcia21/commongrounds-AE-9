@@ -5,6 +5,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 from .models import Project, ProjectCategory, ProjectReview, ProjectRating, Favorite
 from .forms import ProjectForm, ProjectUpdateForm
@@ -12,8 +13,27 @@ from .forms import ProjectForm, ProjectUpdateForm
 
 def project_list(request):
     project = Project.objects.all()
+    created = []
+    favorited = []
+    reviewed = []
 
-    return render(request, 'diyprojects/diyprojects_list.html', {"project" : project})
+    if request.user.is_authenticated:
+        viewer = request.user.profile
+        created = Project.objects.filter(profile=viewer)
+        favorited = Project.objects.filter(favorites__profile=viewer)
+        reviewed = Project.objects.filter(reviews__reviewer=viewer)
+
+        project = project.exclude(profile=viewer)
+        project = project.exclude(favorites__profile=viewer)
+        project = project.exclude(reviews__reviewer=viewer)
+
+    return render(request, 'diyprojects/diyprojects_list.html', {
+        "project" : project,
+        "created" : created,
+        "favorited" : favorited,
+        "reviewed" : reviewed,
+        }
+    )
 
 def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
@@ -75,7 +95,7 @@ def project_detail(request, pk):
 @login_required
 def project_create(request):
     if request.user.profile.role != "Project Creator":
-        return render(request, "403.html")
+        raise PermissionDenied
 
     if request.method == "POST":
         form = ProjectForm(request.POST)
@@ -91,7 +111,7 @@ def project_create(request):
 @login_required
 def project_update(request, pk):
     if request.user.profile.role != "Project Creator":
-        return render(request, "403.html")
+        raise PermissionDenied
     
     project = get_object_or_404(Project, pk=pk)
 

@@ -1,6 +1,41 @@
 {% extends 'diyprojects/base_diyprojects.html' %}
 {% block content%}
 <h2>Project List</h2>
+
+    {% if user.is_authenticated %}
+        {% if created %}
+            <h2>Projects Created</h2>
+            <h3>
+                {% for project in created %}
+                    <li><a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
+                {% endfor %}
+            </h3>
+        {% endif %}
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        {% if favorited %}
+            <h2>Projects Favorited</h2>
+            <h3>
+                {% for project in favorited %}
+                    <li><a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
+                {% endfor %}
+            </h3>
+        {% endif %}
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        {% if reviewed %}
+            <h2>Projects Reviewed</h2>
+            <h3>
+                {% for project in reviewed %}
+                    <li><a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
+                {% endfor %}
+            </h3>
+        {% endif %}
+    {% endif %}
+
+    <h2>Other Projects</h2>
     {% for project in project %}
         <h3> 
             <a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}
