@@ -45,7 +45,7 @@ def dashboard(request):
         book_list = Book.objects.filter(contributor=viewer)
         commission_list = Commission.objects.filter(maker=viewer)
         project_list = Project.objects.filter(profile=viewer)
-        #product_list = Product.objects.filter(owner=viewer)
+        product_list = Product.objects.filter(owner=viewer)
         #event_list = Product.objects.filter(owner=viewer)
 
 
