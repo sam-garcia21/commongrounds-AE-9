@@ -14,6 +14,9 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -125,7 +128,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
+MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_URL = '/media/'
+
 STATIC_URL = 'static/'
+STATIC_ROOT = [os.path.join(BASE_DIR, 'static')]
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'login'

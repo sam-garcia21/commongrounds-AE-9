@@ -3,12 +3,51 @@
 {% block content%}
 <h2>Project Detail</h2>
 <h2>Title: {{project.title}}</h2>
+<h4>Favorites: {{favorite_count}}</h4>
 <h4>Category: {{project.category.name}}</h4>
+<h4>Creator: {{project.profile}}</h4>
+<h4>Rating: {{avg_rating}} </h4>
 <h4>Description: {{project.description}}</h4>
 <h4>Materials: {{project.materials}}</h4>
 <h3>steps: {{project.steps}}</h3>
 <h5>Created on: {{project.created_on}}</h5>
 <h5>Updated on: {{project.updated_on}}</h5>
-<a href= "{% url 'diyprojects:diyprojects_list' %}">Return to Project List</a>
+
+<form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" name="action" value="favorite">Favorite</button>
+    </form>
+
+<p><a href= "{% url 'diyprojects:diyprojects_list' %}">Return to Project List</a></p>
+
+{% if can_update %}
+    <p><a href= "{% url 'diyprojects:diyprojects_update' project.pk %}">Edit this project</a></p>
+{% endif %}
+
+{% if user.is_authenticated %}
+    <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+        <p><textarea name="comment" placeholder=""></textarea></p>
+        <p><input type="file" name="image" accept="image/*"></p>
+        <button type="submit" name="action" value="review">Review</button>
+    </form>
+{% endif %}
+
+{% if user.is_authenticated %}
+    <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
+            {% csrf_token %}
+        <input type="number" name="score" placeholder="" min = "1" max="10">
+       <p> <button type="submit" name="action" value="rate">Rate</button></p>
+    </form>
+{% endif %}
+
+{% for r in review %}
+        <p>{{ r.comment }}</p>
+        <p>{% if r.image %}
+        <img src="{{ r.image.url }}" alt="">
+        {% endif %}</p>
+{% empty %}
+    <p>Leave a Review!</p>
+{% endfor %}
 
 {% endblock %}
