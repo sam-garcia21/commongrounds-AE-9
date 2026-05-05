@@ -61,5 +61,3 @@ def get_commission_summary(*, commission: Commission) -> dict:
     commission.people_required = total_manpower
     commission.save()
     return {"total_manpower": total_manpower, "open_manpower": open_manpower}
-        
-        
