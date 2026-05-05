@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book, Genre, BookReview, Bookmark, Borrow
 from datetime import date
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 def book_list(request):
@@ -64,7 +65,7 @@ def book_detail(request, pk):
 @login_required
 def book_create(request):
     if request.user.profile.role != "Book Contributor":
-        return render(request, "403.html")
+        raise PermissionDenied
 
     if request.method == "POST":
         title = request.POST.get('title')
@@ -93,7 +94,7 @@ def book_create(request):
 def book_update(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if book.contributor != request.user.profile:
-        return render(request, "403.html")
+        raise PermissionDenied
 
     if request.method == "POST":
         book.title = request.POST.get('title')
