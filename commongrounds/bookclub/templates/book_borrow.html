@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Borrow: {{ book.title }}</h2>
+<p>By {{ book.author }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <p>Book: {{ book.title }}</p>
+    <p>
+        <label>Your Name:</label><br>
+        <input type="text" name="borrower_name"
+        value="{% if user.is_authenticated %}{{ user.profile.display_name }}{% endif %}"
+        {% if user.is_authenticated %}readonly{% endif %} required>
+    </p>
+
+    <p>
+        <label>Borrow Date:</label><br>
+        <input type="date" name="date_borrowed" value="{{ today|date:'Y-m-d' }}" required>
+    </p>
+
+    <p>Note: The return date is strictly 14 days from the date the book is borrowed.</p>
+    <button type="submit">Confirm</button>
+</form>
+
+<br>
+<a href="{% url 'bookclub:book_detail' book.pk %}">Go Back</a>
+{% endblock %}
