@@ -13,8 +13,6 @@
 <h5>Created on: {{project.created_on}}</h5>
 <h5>Updated on: {{project.updated_on}}</h5>
 
-
-
 <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
         {% csrf_token %}
         <button type="submit" name="action" value="favorite">Favorite</button>
@@ -49,7 +47,7 @@
         <img src="{{ r.image.url }}" alt="">
         {% endif %}</p>
 {% empty %}
-    <p>No reviews yet for this project.</p>
+    <p>Leave a Review!</p>
 {% endfor %}
 
 {% endblock %}

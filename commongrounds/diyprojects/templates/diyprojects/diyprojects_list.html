@@ -34,8 +34,11 @@
             </h3>
         {% endif %}
     {% endif %}
+        
+        {% if user.is_authenticated %}
+            <h2>More Projects</h2>
+        {% endif%}
 
-    <h2>Other Projects</h2>
     {% for project in project %}
         <h3> 
             <a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}
