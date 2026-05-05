@@ -94,6 +94,8 @@ def project_detail(request, pk):
 
 @login_required
 def project_create(request):
+    project_maker = request.user.profile
+
     if request.user.profile.role != "Project Creator":
         raise PermissionDenied
 
@@ -101,12 +103,16 @@ def project_create(request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
+            project.profile = project_maker
             project.save()
             return redirect('diyprojects:diyprojects_detail', pk=project.pk)
     else:
         form = ProjectForm()
 
-    return render(request, "diyprojects/diyprojects_add.html", {"form" : form})
+    return render(request, "diyprojects/diyprojects_add.html", {
+        "form" : form,
+        "project_maker": project_maker,
+    })
 
 @login_required
 def project_update(request, pk):
@@ -116,11 +122,11 @@ def project_update(request, pk):
     project = get_object_or_404(Project, pk=pk)
 
     if request.method == "POST":
-        form = ProjectForm(request.POST, instance=project)
+        form = ProjectUpdateForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
             return redirect('diyprojects:diyprojects_detail', pk=project.pk)
     else:
-        form = ProjectForm(instance=project)
+        form = ProjectUpdateForm(instance=project)
 
     return render(request, "diyprojects/diyprojects_update.html", {"form" : form})

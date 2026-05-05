@@ -4,7 +4,18 @@
     <form method="POST"> 
 
         {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in form %}
+        <div>
+        {% if field.name == 'profile' %}
+            {{ field.label_tag }} {{ project_maker.user }}
+            <div style="display:none">
+                {{ field }}
+            </div>
+        {% else %}
+            {{ field.label_tag }} {{ field }}
+        {% endif %}
+        </div>
+        {% endfor %}
         
         <button type="submit">Create Project</button>
     </form>
