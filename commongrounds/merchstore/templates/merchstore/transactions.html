@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Your Sales</h2>
+
+{% if grouped_transactions %}
+    {% for buyer, items in grouped_transactions.items %}
+        <h3>Buyer: {{ buyer.username }}</h3>
+        <ul>
+            {% for t in items %}
+                <li>
+                    {{ t.product.name }} - {{ t.amount }} pcs - {{ t.status }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% else %}
+    <p>No transactions found.</p>
+{% endif %}
+
+{% endblock %}
