@@ -15,6 +15,7 @@
     {% if commission_list %}
         <h2>Commissions Created</h2>
             <h3>
+                
                 {% for commission in commission_list %}
                     <li><a href= "{{ commission.get_absolute_url }}">{{commission.title}}</a> - {{commission.commission_type.name}}</li>
                 {% endfor %}
@@ -22,7 +23,6 @@
     {% endif %}
 
     {% if event_list %}
-    hii
         <h2>Events Organized</h2>
             <h3>
                 {% for event in event_list %}
@@ -48,5 +48,7 @@
                 {% endfor %}
             </h3>
     {% endif %}
+
+    <p><a href= "{% url 'accounts:profile_update' username=request.user.username %}">Update your Profile</a></p>
 {% endif %}
 {% endblock %}

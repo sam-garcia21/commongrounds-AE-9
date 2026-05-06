@@ -48,7 +48,7 @@ def dashboard(request):
         commission_list = Commission.objects.filter(maker=viewer)
         project_list = Project.objects.filter(profile=viewer)
         product_list = Product.objects.filter(owner=viewer)
-        event_list = Event.objects.filter(organizer=viewer).distinct()
+        event_list = Event.objects.filter(organizer=viewer)
 
 
     return render(request, 'accounts/dashboard.html', {
