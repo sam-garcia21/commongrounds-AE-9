@@ -42,10 +42,6 @@ def dashboard(request):
 
     if request.user.is_authenticated:
         viewer = request.user.profile
-        # created = Event.objects.all()
-
-        # for x in created:
-        #     for y in x.
 
 
         book_list = Book.objects.filter(contributor=viewer)
