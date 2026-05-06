@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{ object.title }}</h1>
+<h2>{{ object.title }}</h2>
 <p>{{ object.description }}</p>
 <p>Location: {{ object.location }}</p>
 <p>Start: {{ object.start_time }} | End: {{ object.end_time }}</p>
 <p>Status: {{ object.status }} | Signups: {{ object.signup_count }}/{{ object.event_capacity }}</p>
-
 {% if object.event_image %}
 <img src="{{ object.event_image.url }}" width="300">
 {% endif %}
@@ -29,7 +28,9 @@
 {% endif %}
 
 {% if is_owner %}
-<a href="{% url 'localevents:event-edit' object.pk %}">Edit</a>
+<footer><a href="{% url 'localevents:event-edit' object.pk %}"><button type="button">Edit</button></a><br><br>
+    <a href="{% url 'localevents:event-list' %}"><button type="button">Back</button></a>
+</footer>
 {% endif %}
 
 {% endblock %}

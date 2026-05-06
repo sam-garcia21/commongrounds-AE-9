@@ -1,10 +1,11 @@
 from django.urls import path, include
-from .views import ProfileUpdateView, dashboard
+from .views import ProfileUpdateView, dashboard, register
 
 app_name = "accounts"
 
 urlpatterns = [
     path('dashboard/', dashboard, name="dashboard"),
     path('', include('django.contrib.auth.urls')),
+    path('register/', register, name='register'),
     path('<str:username>/', ProfileUpdateView.as_view(), name='profile_update'),
 ]

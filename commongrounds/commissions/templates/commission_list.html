@@ -1,49 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p> Commissions List</p>
-    <ul>
-        {% for commission in all_commissions_list %}
-            <li>
-                <a href="{% url 'commissions:commission_detail' commission.pk %}">
-                    {{ commission }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-    {% if logged_in %}
-        <p>Created Commissions List</p>
-        {% if created_commissions_list %}
-            <ul>
-                {% for commission in created_commissions_list %}
-                    <li>
-                        <a href="{% url 'commissions:commission_detail' commission.pk %}">
-                            {{ commission }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Nothing to show here.</p>
-        {% endif %}
-        <p>Applied Commissions List</p>
-        {% if applied_commissions_list %}
-            <ul>
-                {% for commission in applied_commissions_list %}
-                    <li>
-                        <a href="{% url 'commissions:commission_detail' commission.pk %}">
-                            {{ commission }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Nothing to show here.</p>
-        {% endif %}
-    {% endif %}
-    {% if user.is_authenticated %}
-    <p>
-        <a href='/commissions/requests/add'>Create new commission</a>
-    </p>
-    {% endif %}
+<h2> Commissions List</h2>
+<ul>
+    {% for commission in all_commissions_list %}
+    <li>
+        <a href="{% url 'commissions:commission_detail' commission.pk %}">
+            {{ commission }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% if logged_in %}
+<h3>Created Commissions List</h3>
+{% if created_commissions_list %}
+<ul>
+    {% for commission in created_commissions_list %}
+    <li>
+        <a href="{% url 'commissions:commission_detail' commission.pk %}">
+            {{ commission }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Nothing to show here.</p>
+{% endif %}
+<h3>Applied Commissions List</h3>
+{% if applied_commissions_list %}
+<ul>
+    {% for commission in applied_commissions_list %}
+    <li>
+        <a href="{% url 'commissions:commission_detail' commission.pk %}">
+            {{ commission }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Nothing to show here.</p>
+{% endif %}
+{% endif %}
+{% if user.is_authenticated %}
+<footer>
+    <a href='/commissions/requests/add'><button type="button" class="create-btn">Create new commission</button></a>
+</footer>
+{% endif %}
 {% endblock %}

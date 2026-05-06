@@ -3,67 +3,51 @@
 {% block content %}
 <h2>Book Club's Books</h2>
 
-{% if user.is_authenticated and user.profile.role == "Book Contributor" %}
-    <p><a href="{% url 'bookclub:book_create' %}">Add a new book.</a></p>
-    <hr>
+{% if user.is_authenticated %}
+{% if contributed %}
+<h3>Books Contributed</h3>
+<ul>
+    {% for book in contributed %}
+    <li><a href="{% url 'bookclub:book_detail' book.pk %}">{{ book.title }}</a></li>
+    {% endfor %}
+</ul>
 {% endif %}
 
-{% if user.is_authenticated %}
-    {% if contributed %}
-        <h3>Books Contributed</h3>
-        <ul>
-                {% for book in contributed %}
-                    <li><a href="{% url 'bookclub:book_detail' book.pk %}">{{ book.title }}</a></li>
-                {% endfor %}
-        </ul>
-    {% endif %}
+{% if bookmarked %}
+<h3>Bookmarks</h3>
+<ul>
+    {% for book in bookmarked %}
+    <li><a href="{% url 'bookclub:book_detail' book.pk %}">{{ book.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
 
-    {% if bookmarked %}
-        <h3>Bookmarks</h3>
-        <ul>
-                {% for book in bookmarked %}
-                    <li><a href="{% url 'bookclub:book_detail' book.pk %}">{{ book.title }}</a></li>
-                {% endfor %}
-        </ul>
-    {% endif %}
-
-    {% if reviewed %}
-        <h3>Books Reviewed</h3>
-        <ul>
-                {% for book in reviewed %}
-                    <li><a href="{% url 'bookclub:book_detail' book.pk %}">{{ book.title }}</a></li>
-                {% endfor %}
-        </ul>
-    {% endif %}
-    <hr>
+{% if reviewed %}
+<h3>Books Reviewed</h3>
+<ul>
+    {% for book in reviewed %}
+    <li><a href="{% url 'bookclub:book_detail' book.pk %}">{{ book.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+<hr>
 {% endif %}
 
 <h2>All Books Available</h2>
 <ul>
     {% for book in books %}
-        <li>
-            <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
-            by {{ book.author }} ({{ book.publication_year }})
-        </li>
+    <li>
+        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+        by {{ book.author }} ({{ book.publication_year }})
+    </li>
     {% empty %}
-        <p>No books found. Contribute now!</p>
+    <p>No books found. Contribute now!</p>
     {% endfor %}
 </ul>
+
+{% if user.is_authenticated and user.profile.role == "Book Contributor" %}
+<footer>
+    <a href="{% url 'bookclub:book_create' %}"><button type="button" class="create-btn">Add a new book.</button></a>
+</footer>
+{% endif %}
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
