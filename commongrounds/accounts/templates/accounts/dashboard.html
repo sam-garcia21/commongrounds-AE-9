@@ -22,10 +22,11 @@
     {% endif %}
 
     {% if event_list %}
+    hii
         <h2>Events Organized</h2>
             <h3>
                 {% for event in event_list %}
-                    <li><a href= "{{ event.get_absolute_url }}">{{event.title}}</a>/li>
+                    <li><a href= "{{ event.get_absolute_url }}">{{event.title}}</a></li>
                 {% endfor %}
             </h3>
     {% endif %}
