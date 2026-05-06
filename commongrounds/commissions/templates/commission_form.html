@@ -13,55 +13,55 @@
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
-        <div>
+    <div>
         {% if field.name == 'maker' %}
-            {{ field.label_tag }} {{ profile.user }}
-            <div style="display:none">
-                {{ field }}
-            </div>
-        {% else %}
-            {{ field.label_tag }} {{ field }}
-        {% endif %}
+        {{ field.label_tag }} {{ profile.user }}
+        <div style="display:none">
+            {{ field }}
         </div>
+        {% else %}
+        {{ field.label_tag }} {{ field }}
+        {% endif %}
+    </div>
     {% endfor %}
     <p>Jobs:</p>
     {{ formset.management_form }}
-    
+
     <div id="create-list">
-    {% for form in formset %}
+        {% for form in formset %}
         <div class="form-row">
-            {{ form.id }} 
+            {{ form.id }}
             {% for field in form.visible_fields %}
-                {% if field.name == 'DELETE'%}
-                    <div style="display:none;">
-                        {{ form.DELETE }}
-                    </div>
-                {% else %}
-                <div>
-                    {{field.label_tag}} {{field}}
-                </div>
-                {% endif %}
+            {% if field.name == 'DELETE'%}
+            <div style="display:none;">
+                {{ form.DELETE }}
+            </div>
+            {% else %}
+            <div>
+                {{field.label_tag}} {{field}}
+            </div>
+            {% endif %}
             {% endfor %}
             {% if not commission %}
             <button type="button" class="remove-button">Remove Job</button>
             {% endif %}
         </div>
-    {% endfor %}
+        {% endfor %}
     </div>
 
     <div id="empty-form" style="display:none;">
         <div class="form-row">
-            {{ formset.empty_form.id }} 
+            {{ formset.empty_form.id }}
             {% for field in formset.empty_form.visible_fields %}
-                {% if field.name == 'DELETE'%}
-                    <div style="display:none;">
-                        {{ formset.empty_form.DELETE }}
-                    </div>
-                {% else %}
-                <div>
-                    {{field.label_tag}} {{field}}
-                </div>
-                {% endif %}
+            {% if field.name == 'DELETE'%}
+            <div style="display:none;">
+                {{ formset.empty_form.DELETE }}
+            </div>
+            {% else %}
+            <div>
+                {{field.label_tag}} {{field}}
+            </div>
+            {% endif %}
             {% endfor %}
             {% if not commission %}
             <button type="button" class="remove-button">Remove Job</button>

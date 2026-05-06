@@ -28,12 +28,13 @@ def project_list(request):
         project = project.exclude(reviews__reviewer=viewer)
 
     return render(request, 'diyprojects/diyprojects_list.html', {
-        "project" : project,
-        "created" : created,
-        "favorited" : favorited,
-        "reviewed" : reviewed,
-        }
+        "project": project,
+        "created": created,
+        "favorited": favorited,
+        "reviewed": reviewed,
+    }
     )
+
 
 def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
@@ -56,7 +57,7 @@ def project_detail(request, pk):
             favorite, created = Favorite.objects.get_or_create(
                 project=project,
                 profile=request.user.profile,
-                )
+            )
             if not created:
                 favorite.delete()
 
@@ -66,31 +67,32 @@ def project_detail(request, pk):
             user_profile = request.user.profile
 
             ProjectReview.objects.create(
-                project=project, 
+                project=project,
                 reviewer=request.user.profile,
                 comment=comment,
                 image=image)
-            
+
         elif action == 'rate':
             ProjectRating.objects.create(
-                project=project, 
+                project=project,
                 profile=request.user.profile,
                 score=request.POST.get('score'))
 
         return redirect('diyprojects:diyprojects_detail', pk=project.pk)
 
-    can_update = False 
+    can_update = False
     if request.user.is_authenticated and project.profile == request.user.profile:
         can_update = True
 
     return render(request, 'diyprojects/diyprojects_detail.html', {
-        "project" : project,
-        "favorite_count" : favorite_count,
-        "rating" : rating,
-        "review" : review,
-        "avg_rating" : avg_rating,
-        "can_update" : can_update,
+        "project": project,
+        "favorite_count": favorite_count,
+        "rating": rating,
+        "review": review,
+        "avg_rating": avg_rating,
+        "can_update": can_update,
     })
+
 
 @login_required
 def project_create(request):
@@ -110,15 +112,16 @@ def project_create(request):
         form = ProjectForm()
 
     return render(request, "diyprojects/diyprojects_add.html", {
-        "form" : form,
+        "form": form,
         "project_maker": project_maker,
     })
+
 
 @login_required
 def project_update(request, pk):
     if request.user.profile.role != "Project Creator":
         raise PermissionDenied
-    
+
     project = get_object_or_404(Project, pk=pk)
 
     if request.method == "POST":
@@ -129,4 +132,4 @@ def project_update(request, pk):
     else:
         form = ProjectUpdateForm(instance=project)
 
-    return render(request, "diyprojects/diyprojects_update.html", {"form" : form})
+    return render(request, "diyprojects/diyprojects_update.html", {"form": form})

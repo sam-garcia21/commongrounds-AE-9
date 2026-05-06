@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import *
 
+
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'display_name', 'role',)
     search_fields = ('user__username', 'displaye_name',)
@@ -21,7 +22,5 @@ class ProjectAdmin(admin.ModelAdmin):
     model = Project
 
 
-
 admin.site.register(ProjectCategory, ProjectCategoryAdmin)
 admin.site.register(Project, ProjectAdmin)
-

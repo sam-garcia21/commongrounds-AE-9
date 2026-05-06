@@ -1,9 +1,10 @@
 from django.shortcuts import redirect, render
 from .models import Product, Transaction
 from django.contrib.auth.decorators import login_required
-from .forms import ProductForm,TransactionForm
+from .forms import ProductForm, TransactionForm
 from collections import defaultdict
 from .strategies import AuthenticatedPurchaseStrategy, GuestPurchaseStrategy
+
 
 def item_list(request):
     items = Product.objects.all()
@@ -20,7 +21,7 @@ def item_detail(request, id):
 
         if form.is_valid():
             if request.user.is_authenticated:
-             strategy = AuthenticatedPurchaseStrategy()
+                strategy = AuthenticatedPurchaseStrategy()
             else:
                 strategy = GuestPurchaseStrategy()
 
@@ -33,6 +34,7 @@ def item_detail(request, id):
 
 def home(request):
     return redirect("/merchstore/items")
+
 
 @login_required
 def product_create(request):
@@ -47,6 +49,8 @@ def product_create(request):
         form = ProductForm()
 
     return render(request, "merchstore/product_form.html", {"form": form})
+
+
 @login_required
 def product_update(request, id):
     product = Product.objects.get(id=id)
@@ -59,7 +63,6 @@ def product_update(request, id):
         if form.is_valid():
             updated_product = form.save(commit=False)
 
-            
             if updated_product.stock == 0:
                 updated_product.status = 'out'
             else:
@@ -69,6 +72,8 @@ def product_update(request, id):
             return redirect(f"/merchstore/item/{product.id}")
     else:
         form = ProductForm(instance=product)
+
+
 @login_required
 def cart_view(request):
     transactions = Transaction.objects.filter(buyer=request.user.profile)
@@ -76,9 +81,12 @@ def cart_view(request):
     return render(request, "merchstore/cart.html", {
         "transactions": transactions
     })
+
+
 @login_required
 def transactions_view(request):
-    transactions = Transaction.objects.filter(product__owner=request.user.profile)
+    transactions = Transaction.objects.filter(
+        product__owner=request.user.profile)
 
     grouped = defaultdict(list)
 
@@ -88,6 +96,7 @@ def transactions_view(request):
     return render(request, "merchstore/transactions.html", {
         "grouped_transactions": dict(grouped)
     })
+
 
 @login_required
 def cart_view(request):
