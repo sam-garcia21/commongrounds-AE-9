@@ -33,9 +33,9 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://server-production-9916.up.railway.app/']
+ALLOWED_HOSTS = ['server-production-9916.up.railway.app']
 
-CSRF_TRUSTED_ORIGINS=['https://server-production-9916.up.railway.app/']
+CSRF_TRUSTED_ORIGINS=['server-production-9916.up.railway.app']
 
 
 # Application definition
