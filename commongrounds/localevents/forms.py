@@ -6,6 +6,14 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         exclude = ['organizer', 'created_on', 'updated_on']
+        widgets = {
+            'start_time': forms.TextInput(
+                attrs={'type': 'datetime-local'}
+            ),
+            'end_time': forms.TextInput(
+                attrs={'type': 'datetime-local'}
+            )
+        }
 
 
 class EventSignupForm(forms.ModelForm):
