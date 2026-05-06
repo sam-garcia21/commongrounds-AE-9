@@ -4,6 +4,11 @@ Django==6.0.2
 gunicorn==26.0.0
 packaging==26.2
 pillow==12.2.0
+psycopg==3.3.4
+psycopg-binary==3.3.4
+psycopg-pool==3.3.1
 psycopg2-binary==2.9.12
 python-dotenv==1.2.1
 sqlparse==0.5.5
+typing_extensions==4.15.0
+whitenoise==6.12.0
