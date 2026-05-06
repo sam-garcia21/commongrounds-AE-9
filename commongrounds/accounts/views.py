@@ -42,11 +42,13 @@ def dashboard(request):
 
     if request.user.is_authenticated:
         viewer = request.user.profile
+
+
         book_list = Book.objects.filter(contributor=viewer)
         commission_list = Commission.objects.filter(maker=viewer)
         project_list = Project.objects.filter(profile=viewer)
         product_list = Product.objects.filter(owner=viewer)
-        #event_list = Product.objects.filter(owner=viewer)
+        event_list = Event.objects.filter(organizer=viewer)
 
 
     return render(request, 'accounts/dashboard.html', {
