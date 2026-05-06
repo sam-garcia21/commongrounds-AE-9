@@ -147,3 +147,64 @@ footer {
     text-align: right;
     padding: 1rem 2rem;
 }
+
+
+form p {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 1.1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+input[type="date"],
+input[type="file"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1.5px solid #b5c9bb;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #193b24;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+input[type="date"]:focus,
+input[type="file"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #193b24;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+input[type="submit"] {
+    padding: 0.55rem 1.2rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    background-color: #fbfaf5;
+    color: #193b24;
+    font-weight: bold;
+    box-shadow: 0 2px 6px #193b24;
+}
+
+input[type="submit"]:hover {
+    background-color: #C3C2BD;
+}
