@@ -14,7 +14,7 @@
         <label>Genre:</label><br>
         <select name="genre" required>
             {% for genre in genres %}
-            <option value="{{ genre.id }}" {% if book.genre.id==genre.id %}selected{% endif %}>
+            <option value="{{ genre.id }}" {% if book.genre.id == genre.id %}selected{% endif %}>
                 {{ genre.name }}
             </option>
             {% endfor %}

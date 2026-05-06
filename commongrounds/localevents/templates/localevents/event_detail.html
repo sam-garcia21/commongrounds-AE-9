@@ -9,28 +9,28 @@
 {% if object.event_image %}
 <img src="{{ object.event_image.url }}" width="300">
 {% endif %}
-
+<footer>
 {% if not is_owner %}
 {% if user.is_authenticated %}
 <form method="POST" action="{% url 'localevents:event-signup' object.pk %}">
     {% csrf_token %}
     <button type="submit" {% if is_full %}disabled{% endif %}>
         {% if is_full %}Full{% else %}Sign Up{% endif %}
-    </button>
+    </button><br><br>
 </form>
 {% else %}
 <a href="{% url 'localevents:event-signup' object.pk %}">
     <button {% if is_full %}disabled{% endif %}>
         {% if is_full %}Full{% else %}Sign Up{% endif %}
     </button>
-</a>
+</a><br><br>
 {% endif %}
 {% endif %}
-
-{% if is_owner %}
-<footer><a href="{% url 'localevents:event-edit' object.pk %}"><button type="button">Edit</button></a><br><br>
+    {% if is_owner %}
+    <a href="{% url 'localevents:event-edit' object.pk %}"><button type="button">Edit</button></a><br><br>
+    {% endif %}
     <a href="{% url 'localevents:event-list' %}"><button type="button">Back</button></a>
 </footer>
-{% endif %}
+
 
 {% endblock %}

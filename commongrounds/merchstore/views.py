@@ -28,7 +28,7 @@ def item_detail(request, id):
         return strategy.execute(request, product, form)
     return render(request, "merchstore/item_detail.html", {
         "product": product,
-        "form": form
+        "form": form,
     })
 
 
@@ -72,7 +72,7 @@ def product_update(request, id):
             return redirect(f"/merchstore/item/{product.id}")
     else:
         form = ProductForm(instance=product)
-
+    return render(request, "merchstore/product_form.html", {"form": form}) 
 
 @login_required
 def cart_view(request):
