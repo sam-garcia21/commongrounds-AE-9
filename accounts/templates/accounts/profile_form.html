@@ -4,6 +4,7 @@
 <h2>Profile Update</h2>
 
 <p>Username: {{ user.username }}</p>
+<p>Current Role: {{ user.profile.role }}</p>
 
 <form method="POST">
     {% csrf_token %}
