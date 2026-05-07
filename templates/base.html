@@ -22,6 +22,7 @@
             </form>
             {% else %}
             <span>You are not logged in. Log in or register to continue!</span>
+            <a href="/"><button type="button" class="base-btn">Homepage</button></a>
             <a href="{% url 'accounts:register' %}"><button type="button" class="base-btn">Register</button></a>
             <a href="/accounts/login/"><button type="button" class="base-btn">Login</button></a>
             {% endif %}
