@@ -4,6 +4,10 @@
 
 <h2>Merchandise Store</h2>
 
+{% if user.is_authenticated and user.profile.role == "Market Seller" %}
+    <a href="/merchstore/item/add">Add Product</a>
+{% endif %}
+
 <ul>
     {% for item in items %}
     <li>

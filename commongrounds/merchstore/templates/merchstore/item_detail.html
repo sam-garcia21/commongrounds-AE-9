@@ -3,26 +3,43 @@
 {% block content %}
 
 <h2>{{ product.name }}</h2>
+
 <p>{{ product.description }}</p>
 <p>Type: {{ product.product_type }}</p>
 <p>Price: ${{ product.price }}</p>
+<p>Stock: {{ product.stock }}</p>
+
 <a href="/merchstore/items">Back to items</a>
+
+{% if user.is_authenticated and user.profile == product.owner %}
+    <br><br>
+    <a href="/merchstore/item/{{ product.id }}/edit">
+        Edit Product
+    </a>
+{% endif %}
+
 <h3>Buy this product</h3>
 
-{% if user == product.owner %}
-<p>You cannot buy your own product.</p>
+{% if user.is_authenticated and user.profile == product.owner %}
+    <p>You cannot buy your own product.</p>
+
 {% else %}
+
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
 
     {% if product.stock == 0 %}
-    <button type="submit" disabled>Out of Stock</button>
+        <button type="submit" disabled>
+            Out of Stock
+        </button>
     {% else %}
-    <button type="submit">Buy</button>
+        <button type="submit">
+            Buy
+        </button>
     {% endif %}
 </form>
+
 {% endif %}
-<p>Stock: {{ product.stock }}</p>
 
 {% endblock %}
