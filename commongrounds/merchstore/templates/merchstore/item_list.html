@@ -5,13 +5,13 @@
 <h2>Merchandise Store</h2>
 
 <ul>
-{% for item in items %}
-<li>
-<a href="/merchstore/item/{{ item.id }}">
-{{ item.name }} - ${{ item.price }}
-</a>
-</li>
-{% endfor %}
+    {% for item in items %}
+    <li>
+        <a href="/merchstore/item/{{ item.id }}">
+            {{ item.name }} - ${{ item.price }}
+        </a>
+    </li>
+    {% endfor %}
 </ul>
 
 {% endblock %}

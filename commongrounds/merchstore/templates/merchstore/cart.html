@@ -5,18 +5,18 @@
 <h2>Your Cart</h2>
 
 {% if grouped_transactions %}
-    {% for owner, items in grouped_transactions.items %}
-        <h3>Seller: {{ owner.username }}</h3>
-        <ul>
-            {% for t in items %}
-                <li>
-                    {{ t.product.name }} - {{ t.amount }} pcs - {{ t.status }}
-                </li>
-            {% endfor %}
-        </ul>
+{% for owner, items in grouped_transactions.items %}
+<h3>Seller: {{ owner.username }}</h3>
+<ul>
+    {% for t in items %}
+    <li>
+        {{ t.product.name }} - {{ t.amount }} pcs - {{ t.status }}
+    </li>
     {% endfor %}
+</ul>
+{% endfor %}
 {% else %}
-    <p>No items in cart.</p>
+<p>No items in cart.</p>
 {% endif %}
 
 {% endblock %}

@@ -1,22 +1,22 @@
 {% extends 'diyprojects/base_diyprojects.html' %}
 
 {% block content %}
-    <form method="POST"> 
+<form method="POST">
 
-        {% csrf_token %}
-        {% for field in form %}
-        <div>
+    {% csrf_token %}
+    {% for field in form %}
+    <div>
         {% if field.name == 'profile' %}
-            {{ field.label_tag }} {{ project_maker.user }}
-            <div style="display:none">
-                {{ field }}
-            </div>
-        {% else %}
-            {{ field.label_tag }} {{ field }}
-        {% endif %}
+        {{ field.label_tag }} {{ project_maker.user }}
+        <div style="display:none">
+            {{ field }}
         </div>
-        {% endfor %}
-        
-        <button type="submit">Create Project</button>
-    </form>
+        {% else %}
+        {{ field.label_tag }} {{ field }}
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <button type="submit">Create Project</button>
+</form>
 {% endblock %}

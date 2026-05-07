@@ -10,27 +10,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const template = document.getElementById('empty-form').innerHTML;
 
         const newFormHtml = template.replace(/__prefix__/g, currentFormCount);
-        
+
         container.insertAdjacentHTML('beforeend', newFormHtml);
         const updatedContainer = document.getElementById('create-list');
 
         const newFormRow = updatedContainer.lastElementChild;
         const removeBtn = newFormRow.querySelector('.remove-button');
         removeBtn.addEventListener('click', () => {
-            const formRow = newFormRow; 
+            const formRow = newFormRow;
             const removeInput = formRow.querySelector('input[name$="-DELETE"]');
-            removeInput.checked = true; 
-            formRow.style.display = 'none'; 
+            removeInput.checked = true;
+            formRow.style.display = 'none';
         });
-        
+
         totalForms.setAttribute('value', currentFormCount + 1);
     });
 
     removeBtns.forEach(button => {
         button.addEventListener('click', () => {
-            const formRow = button.parentElement; 
+            const formRow = button.parentElement;
             const deleteCheckbox = formRow.querySelector('input[name$="-DELETE"]');
-            deleteCheckbox.checked = true; 
+            deleteCheckbox.checked = true;
             formRow.style.display = 'none';
         });
     })

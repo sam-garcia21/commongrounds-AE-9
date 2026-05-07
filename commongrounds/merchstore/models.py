@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from accounts.models import Profile
 
 
@@ -30,7 +31,8 @@ class Product(models.Model):
 
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
-    product_image = models.ImageField(upload_to='products/', null=True, blank=True)
+    product_image = models.ImageField(
+        upload_to='products/', null=True, blank=True)
 
     description = models.TextField()
 
@@ -49,7 +51,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
 
 
 class Transaction(models.Model):

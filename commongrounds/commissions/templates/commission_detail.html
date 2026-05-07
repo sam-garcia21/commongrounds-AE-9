@@ -1,41 +1,42 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p> Commission Details</p>
-    <p> {{ commission.title }} </p>
-    <ul>
-        <li> Commissioned by: {{ commission.maker }} </li>
-        <li> Status: {{ commission.get_status_display }} (Last Updated on {{ commission.updated_on }})</li>
-        <li> Created On: {{ commission.created_on }} </li>
-        <li> Description: {{ commission.description }} </li>
-        <li> {{commission_summary.open_manpower}} / {{commission_summary.total_manpower}} job slots remaining <li>
+<p> Commission Details</p>
+<p> {{ commission.title }} </p>
+<ul>
+    <li> Commissioned by: {{ commission.maker }} </li>
+    <li> Status: {{ commission.get_status_display }} (Last Updated on {{ commission.updated_on }})</li>
+    <li> Created On: {{ commission.created_on }} </li>
+    <li> Description: {{ commission.description }} </li>
+    <li> {{commission_summary.open_manpower}} / {{commission_summary.total_manpower}} job slots remaining
+    <li>
         <div>Jobs:
             <ul>
                 {% for job in jobs %}
-                    <li>
-                        {{ job.role }} - {{ job.get_status_display }}
-                        <p>{{ job.getOpenManpower }}/{{ job.manpower_required }} person(s) needed</p>
-                        {% if user.is_authenticated %}
-                        <form method="POST">
-                            {% csrf_token %}
-                            {% if job.isFull %}
-                                <button type="submit" name="job_id" value="{{ job.id }}" disabled>Apply for Job</button>
-                            {% else %}
-                                <button type="submit" name="job_id" value="{{ job.id }}">Apply for Job</button>
-                            {% endif %}
-                        </form>
+                <li>
+                    {{ job.role }} - {{ job.get_status_display }}
+                    <p>{{ job.getOpenManpower }}/{{ job.manpower_required }} person(s) needed</p>
+                    {% if user.is_authenticated %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% if job.isFull %}
+                        <button type="submit" name="job_id" value="{{ job.id }}" disabled>Apply for Job</button>
+                        {% else %}
+                        <button type="submit" name="job_id" value="{{ job.id }}">Apply for Job</button>
                         {% endif %}
-                    </li>
+                    </form>
+                    {% endif %}
+                </li>
                 {% endfor %}
             </ul>
         </div>
-    </ul>
-    {% if commission.maker == user.profile %}
+</ul>
+{% if commission.maker == user.profile %}
+<div>
+    <a href="{% url 'commissions:commission_update' commission.pk %}">Edit Commissions</a>
+</div>
+{% endif %}
+<div>
+    <a href="{% url 'commissions:commission_list' %}">Check Other Commissions</a>
     <div>
-        <a href="{% url 'commissions:commission_update' commission.pk %}">Edit Commissions</a>
-    </div>
-    {% endif %}
-    <div>
-        <a href="{% url 'commissions:commission_list' %}">Check Other Commissions</a>
-    <div>
-{% endblock %}
+        {% endblock %}
