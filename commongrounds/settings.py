@@ -37,6 +37,8 @@ ALLOWED_HOSTS = ['server-production-9916.up.railway.app']
 
 CSRF_TRUSTED_ORIGINS=['https://server-production-9916.up.railway.app']
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 
 # Application definition
 
