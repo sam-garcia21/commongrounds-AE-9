@@ -21,7 +21,7 @@ def project_list(request):
         viewer = request.user.profile
         created = Project.objects.filter(profile=viewer)
         favorited = Project.objects.filter(favorites__profile=viewer)
-        reviewed = Project.objects.filter(reviews__reviewer=viewer)
+        reviewed = Project.objects.filter(reviews__reviewer=viewer).distinct()
 
         project = project.exclude(profile=viewer)
         project = project.exclude(favorites__profile=viewer)
