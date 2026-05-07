@@ -40,7 +40,9 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('accounts:profile_update', kwargs={'username': self.request.user.username})
 
 
+@login_required
 def dashboard(request):
+    dashboard_empty = False
     book_list = []
     commission_list = []
     project_list = []
@@ -55,6 +57,9 @@ def dashboard(request):
         project_list = Project.objects.filter(profile=viewer)
         product_list = Product.objects.filter(owner=viewer)
         event_list = Event.objects.filter(organizer=viewer)
+    
+    if not book_list or not commission_list or not project_list or not product_list or not event_list:
+        dashboard_empty = True
 
     return render(request, 'accounts/dashboard.html', {
         "book_list": book_list,
@@ -62,6 +67,7 @@ def dashboard(request):
         "project_list": project_list,
         "product_list": product_list,
         "event_list": event_list,
+        "dashboard_empty":dashboard_empty
     }
     )
 
