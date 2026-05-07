@@ -73,7 +73,7 @@ class CommissionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return False
 
     def get_initial(self):
-        return {'maker': self.request.user}
+        return {'maker': self.request.user.profile}
 
     def get_context_data(self, **kwargs):
         self.object = None
