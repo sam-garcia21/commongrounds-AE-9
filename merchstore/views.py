@@ -38,6 +38,8 @@ def home(request):
 
 @login_required
 def product_create(request):
+    if request.user.profile.role != "Market Seller":
+        return redirect('/merchstore/items')
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
@@ -50,9 +52,14 @@ def product_create(request):
 
     return render(request, "merchstore/product_form.html", {"form": form})
 
+    
+
+
 
 @login_required
 def product_update(request, id):
+    if request.user.profile.role != "Market Seller":
+        return redirect('/merchstore/items')
     product = Product.objects.get(id=id)
 
     if product.owner != request.user.profile:
@@ -72,6 +79,10 @@ def product_update(request, id):
             return redirect(f"/merchstore/item/{product.id}")
     else:
         form = ProductForm(instance=product)
+
+        return render(request, "merchstore/product_form.html", {"form": form})
+
+
     return render(request, "merchstore/product_form.html", {"form": form}) 
 
 @login_required
@@ -81,6 +92,7 @@ def cart_view(request):
     return render(request, "merchstore/cart.html", {
         "transactions": transactions
     })
+
 
 
 @login_required
