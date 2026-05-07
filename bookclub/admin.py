@@ -7,6 +7,7 @@ class ProfileAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'displaye_name',)
     list_filter = ('role',)
 
+
 class GenreAdmin(admin.ModelAdmin):
     model = Genre
     search_fields = ('name', )
@@ -19,16 +20,20 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'genre', 'publication_year', )
     list_filter = ('author', 'genre', 'publication_year', )
 
+
 class BookmarkAdmin(admin.ModelAdmin):
     list_display = ('book', 'profile',)
+
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('book', 'title', 'user_reviewer', 'anon_reviewer',)
     list_filter = ('book',)
 
+
 class BorrowAdmin(admin.ModelAdmin):
     list_display = ('book', 'name', 'date_borrowed', 'date_return',)
     readonly_fields = ('date_return',)
+
 
 admin.site.register(Genre, GenreAdmin)
 admin.site.register(Book, BookAdmin)

@@ -10,8 +10,8 @@
     <p>
         <label>Your Name:</label><br>
         <input type="text" name="borrower_name"
-        value="{% if user.is_authenticated %}{{ user.profile.display_name }}{% endif %}"
-        {% if user.is_authenticated %}readonly{% endif %} required>
+            value="{% if user.is_authenticated %}{{ user.profile.display_name }}{% endif %}"
+            {% if user.is_authenticated %}readonly{% endif %}
     </p>
 
     <p>

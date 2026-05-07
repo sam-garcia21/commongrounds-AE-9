@@ -10,6 +10,8 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Sign Up</button>
-</form>
+</form><br><br>
+
+<a href="{% url 'localevents:event-detail' event.pk %}"><button type="button">Back</button></a>
 
 {% endblock %}

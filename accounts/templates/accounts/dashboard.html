@@ -3,52 +3,64 @@
 {% block content %}
 {% if user.is_authenticated %}
 
-    {% if book_list %}
-        <h2>Books Contributed</h2>
-            <h3>
-                {% for book in book_list %}
-                    <li><a href= "{{ book.get_absolute_url }}">{{book.title}}</a></li>
-                {% endfor %}
-            </h3>
-    {% endif %}
+{% if book_list %}
+<h2>Books Contributed</h2>
+<h3>
+    <ul>
+        {% for book in book_list %}
+        <li><a href="{{ book.get_absolute_url }}">{{book.title}}</a></li>
+        {% endfor %}
+    </ul>
+</h3>
+{% endif %}
 
-    {% if commission_list %}
-        <h2>Commissions Created</h2>
-            <h3>
-                
-                {% for commission in commission_list %}
-                    <li><a href= "{{ commission.get_absolute_url }}">{{commission.title}}</a> - {{commission.commission_type.name}}</li>
-                {% endfor %}
-            </h3>
-    {% endif %}
+{% if commission_list %}
+<h2>Commissions Created</h2>
+<h3>
+    <ul>
+        {% for commission in commission_list %}
+        <li><a href="{{ commission.get_absolute_url }}">{{commission.title}}</a> - {{commission.commission_type.name}}
+        </li>
+        {% endfor %}
+    </ul>
+</h3>
+{% endif %}
 
-    {% if event_list %}
-        <h2>Events Organized</h2>
-            <h3>
-                {% for event in event_list %}
-                    <li><a href= "{{ event.get_absolute_url }}">{{event.title}}</a></li>
-                {% endfor %}
-            </h3>
-    {% endif %}
+{% if event_list %}
+<h2>Events Organized</h2>
+<h3>
+    <ul>
+        {% for event in event_list %}
+        <li><a href="{{ event.get_absolute_url }}">{{event.title}}</a></li>
+        {% endfor %}
+    </ul>
+</h3>
+{% endif %}
 
-    {% if product_list %}
-        <h2>Products Sold</h2>
-            <h3>
-                {% for product in product_list %}
-                    <a href="/merchstore/item/{{ product.id }}">{{ product.name }}</a></li>
-                {% endfor %}
-            </h3>
-    {% endif %}
+{% if product_list %}
+<h2>Products Sold</h2>
+<h3>
+    <ul>
+        {% for product in product_list %}
+        <a href="/merchstore/item/{{ product.id }}">{{ product.name }}</a></li>
+        {% endfor %}
+    </ul>
+</h3>
+{% endif %}
 
-    {% if project_list %}
-        <h2>Projects Created</h2>
-            <h3>
-                {% for project in project_list %}
-                    <li><a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
-                {% endfor %}
-            </h3>
-    {% endif %}
-
-    <p><a href= "{% url 'accounts:profile_update' username=request.user.username %}">Update your Profile</a></p>
+{% if project_list %}
+<h2>Projects Created</h2>
+<h3>
+    <ul>
+        {% for project in project_list %}
+        <li><a href="{{ project.get_absolute_url }}">{{project.title}}</a></li>
+        {% endfor %}
+    </ul>
+</h3>
+{% endif %}
+<footer>
+    <p><a href="{% url 'accounts:profile_update' username=request.user.username %}"><button type="button"
+                class="dbup-btn">Update your Profile</button></a></p>
+</footer>
 {% endif %}
 {% endblock %}

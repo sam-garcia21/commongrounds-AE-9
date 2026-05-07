@@ -1,49 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>{% if book %} Update {{ book.title }} {% else %} Add Book {% endif %}</h2>
-    <form method="POST">
-        {% csrf_token %}
+<h2>{% if book %} Update {{ book.title }} {% else %} Add Book {% endif %}</h2>
+<form method="POST">
+    {% csrf_token %}
 
-        <p>
-            <label>Title:</label><br>
-            <input type="text" name="title" value="{{ book.title }}" required maxlength="255">
-        </p>
+    <p>
+        <label>Title:</label><br>
+        <input type="text" name="title" value="{{ book.title }}" required maxlength="255">
+    </p>
 
-        <p>
-            <label>Genre:</label><br>
-            <select name="genre" required>
-                {% for genre in genres %}
-                    <option value="{{ genre.id }}" {% if book.genre.id == genre.id %}selected{% endif %}>
-                        {{ genre.name }}
-                    </option>
-                {% endfor %}
-            </select>
-        </p>
+    <p>
+        <label>Genre:</label><br>
+        <select name="genre" required>
+            {% for genre in genres %}
+            <option value="{{ genre.id }}" {% if book.genre.id == genre.id %}selected{% endif %}>
+                {{ genre.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </p>
 
-        <p>
-            <label>Author:</label><br>
-            <input type="text" name="author" value="{{ book.author }}" required>
-        </p>
+    <p>
+        <label>Author:</label><br>
+        <input type="text" name="author" value="{{ book.author }}" required>
+    </p>
 
-        <p>
-            <label>Synopsis:</label><br>
-            <textarea name="synopsis">{{ book.synopsis }}</textarea>
-        </p>
+    <p>
+        <label>Synopsis:</label><br>
+        <textarea name="synopsis">{{ book.synopsis }}</textarea>
+    </p>
 
-        <p>
-            <label>Publication Year:</label><br>
-            <input type="number" name="publication_year" value="{{ book.publication_year }}" required>
-        </p>
+    <p>
+        <label>Publication Year:</label><br>
+        <input type="number" name="publication_year" value="{{ book.publication_year }}" required>
+    </p>
 
-        <p>
-            <label>Borrow Availability:</label><br>
-            <input type="checkbox" name="is_available" {% if book.is_available or not book %}checked{% endif %}>
-        </p>
+    <p>
+        <label>Borrow Availability:</label><br>
+        <input type="checkbox" name="is_available" {% if book.is_available or not book %}checked{% endif %}>
+    </p>
 
-        <button type="submit">Save Book</button>
-    </form>
+    <button type="submit">Save Book</button>
+</form>
 
-    <br>
-    <a href="{% url 'bookclub:book_list' %}">Cancel</a>
-    {% endblock %}
+<br>
+<a href="{% url 'bookclub:book_list' %}">Cancel</a>
+{% endblock %}

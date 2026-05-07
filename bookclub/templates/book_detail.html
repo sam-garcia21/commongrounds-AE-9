@@ -9,38 +9,38 @@
 
 <p>Status:
     {% if book.is_available %}
-        Available to Borrow
-        <br>
-        {% if user.profile != book.contributor %}
-            <a href="{% url 'bookclub:book_borrow' book.pk %}"><button>Borrow this Book</button></a>
-        {% else %}
-            <p> You are the owner of this book </p>
-        {% endif %}
+    Available to Borrow
+    <br>
+    {% if user.profile != book.contributor %}
+    <a href="{% url 'bookclub:book_borrow' book.pk %}"><button>Borrow this Book</button></a>
     {% else %}
-        Currently Not Available 
-    {% endif %}
+<p> You are the owner of this book </p>
+{% endif %}
+{% else %}
+Currently Not Available
+{% endif %}
 </p>
 
 {% if can_edit %}
-    <p><a href="{% url 'bookclub:book_update' book.pk %}">Edit Details</a></p>
+<p><a href="{% url 'bookclub:book_update' book.pk %}">Edit Details</a></p>
 {% endif %}
 <hr>
 
 <p>Bookmarks: {{ bookmarks_count }}</p>
 {% if user.is_authenticated %}
-    <form action="{% url 'bookclub:book_detail' book.pk %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" name="action" value="bookmark">Bookmark</button>
-    </form>
+<form action="{% url 'bookclub:book_detail' book.pk %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" name="action" value="bookmark">Bookmark</button>
+</form>
 {% endif %}
 
 <h3>Reviews</h3>
 {% for review in reviews %}
-    <h4>{{ review.title }}</h4>
-    <p>{{ review.comment }}</p>
-    <small>Reviewed by: {{ review.user_reviewer.display_name|default:review.anon_reviewer }}</small>
+<h4>{{ review.title }}</h4>
+<p>{{ review.comment }}</p>
+<small>Reviewed by: {{ review.user_reviewer.display_name|default:review.anon_reviewer }}</small>
 {% empty %}
-    <p>No reviews available for this book yet.</p>
+<p>No reviews available for this book yet.</p>
 {% endfor %}
 
 <h4>Leave a Review</h4>

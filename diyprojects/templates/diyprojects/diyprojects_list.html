@@ -2,48 +2,53 @@
 {% block content%}
 <h2>Project List</h2>
 
-    {% if user.is_authenticated %}
-        {% if created %}
-            <h2>Projects Created</h2>
-            <h3>
-                {% for project in created %}
-                    <li><a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
-                {% endfor %}
-            </h3>
-        {% endif %}
-    {% endif %}
-
-    {% if user.is_authenticated %}
-        {% if favorited %}
-            <h2>Projects Favorited</h2>
-            <h3>
-                {% for project in favorited %}
-                    <li><a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
-                {% endfor %}
-            </h3>
-        {% endif %}
-    {% endif %}
-
-    {% if user.is_authenticated %}
-        {% if reviewed %}
-            <h2>Projects Reviewed</h2>
-            <h3>
-                {% for project in reviewed %}
-                    <li><a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
-                {% endfor %}
-            </h3>
-        {% endif %}
-    {% endif %}
-        
-    {% if user.is_authenticated %}
-        <h2>More Projects</h2>
-    {% endif%}
-
-    {% for project in project %}
-        <h3> 
-            <a href= "{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}
-        </h3>
+{% if user.is_authenticated %}
+{% if created %}
+<h3>Projects Created</h3>
+<ul>
+    {% for project in created %}
+    <li><a href="{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
     {% endfor %}
+</ul>
+{% endif %}
+{% endif %}
 
-    <a href= "{% url 'diyprojects:diyprojects_add' %}">Create New Project</a>
+{% if user.is_authenticated %}
+{% if favorited %}
+<h3>Projects Favorited</h3>
+<ul>
+    {% for project in favorited %}
+    <li><a href="{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endif %}
+
+{% if user.is_authenticated %}
+{% if reviewed %}
+<h3>Projects Reviewed</h3>
+<ul>
+    {% for project in reviewed %}
+    <li><a href="{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endif %}
+
+{% if user.is_authenticated %}
+<h3>More Projects</h3>
+<ul>
+    {% for project in project %}
+    <li>
+        <a href="{{ project.get_absolute_url }}">{{project.title}}</a> - {{project.category.name}}
+    </li>
+    {% endfor %}
+</ul>
+{% endif%}
+
+<footer>
+    <a href="{% url 'diyprojects:diyprojects_add' %}">
+        <button type="button" class="create-btn">Create New Project</button>
+    </a>
+</footer>
 {% endblock %}
