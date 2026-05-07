@@ -6,7 +6,7 @@
 
 {% if grouped_transactions %}
 {% for owner, items in grouped_transactions.items %}
-<h3>Seller: {{ owner.username }}</h3>
+<h3>Seller: {{ owner.display_name }}</h3>
 <ul>
     {% for t in items %}
     <li>

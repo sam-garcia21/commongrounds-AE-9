@@ -52,9 +52,6 @@ def product_create(request):
 
     return render(request, "merchstore/product_form.html", {"form": form})
 
-    
-
-
 
 @login_required
 def product_update(request, id):
@@ -82,8 +79,8 @@ def product_update(request, id):
 
         return render(request, "merchstore/product_form.html", {"form": form})
 
+    return render(request, "merchstore/product_form.html", {"form": form})
 
-    return render(request, "merchstore/product_form.html", {"form": form}) 
 
 @login_required
 def cart_view(request):
@@ -92,7 +89,6 @@ def cart_view(request):
     return render(request, "merchstore/cart.html", {
         "transactions": transactions
     })
-
 
 
 @login_required
@@ -122,5 +118,3 @@ def cart_view(request):
     return render(request, "merchstore/cart.html", {
         "grouped_transactions": dict(grouped)
     })
-
-    return render(request, "merchstore/product_form.html", {"form": form})

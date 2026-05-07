@@ -32,7 +32,7 @@ class Product(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     product_image = models.ImageField(
-        upload_to='products/', null=True, blank=True)
+        upload_to='merchstore/products/', null=True, blank=True)
 
     description = models.TextField()
 

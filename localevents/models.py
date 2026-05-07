@@ -19,7 +19,7 @@ class Event(models.Model):
     category = models.ForeignKey(
         EventType, on_delete=models.SET_NULL, null=True)
     organizer = models.ManyToManyField(Profile, blank=True)
-    event_image = models.ImageField(upload_to='images/', null=True, blank=True)
+    event_image = models.ImageField(upload_to='localevents/events/', null=True, blank=True)
     description = models.TextField()
     location = models.CharField(max_length=255)
     start_time = models.DateTimeField()

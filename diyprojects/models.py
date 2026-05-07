@@ -55,7 +55,7 @@ class ProjectReview(models.Model):
         Project, on_delete=models.CASCADE, related_name='reviews', null=True, blank=True)
     reviewer = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     comment = models.TextField()
-    image = models.ImageField(upload_to='images/', null=True)
+    image = models.ImageField(upload_to='diyprojects/projects', null=True)
 
 
 class ProjectRating(models.Model):
