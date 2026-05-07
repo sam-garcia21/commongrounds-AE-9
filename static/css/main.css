@@ -208,3 +208,8 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #C3C2BD;
 }
+
+form p input[type="checkbox"] {
+    width: 1rem;
+    margin: 0;
+}
