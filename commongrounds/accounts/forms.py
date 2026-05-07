@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['display_name']
+        fields = ['display_name','role']
 
 
 class RegisterForm(UserCreationForm):
