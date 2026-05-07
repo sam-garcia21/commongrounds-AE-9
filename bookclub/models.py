@@ -19,7 +19,7 @@ class Genre(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=255)
     genre = models.ForeignKey(
-        Genre, on_delete=models.SET_NULL, null=True, related_name="books")
+        Genre, on_delete=models.SET_NULL, null=True, blank=True, related_name="books")
     author = models.CharField(max_length=255)
     publication_year = models.IntegerField()
     contributor = models.ForeignKey(
