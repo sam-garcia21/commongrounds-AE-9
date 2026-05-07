@@ -5,8 +5,10 @@ from accounts.models import Profile
 
 @transaction.atomic
 def create_commission(*, author: Profile, data: Commission, jobs_data: list[Job]) -> Commission:
+    data.pop('maker', None) 
     commission = Commission.objects.create(
         **data,
+        maker=author
     )
     job_instances = []
     for job in jobs_data:
