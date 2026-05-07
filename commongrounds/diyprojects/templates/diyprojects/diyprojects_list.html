@@ -35,8 +35,9 @@
 {% endif %}
 {% endif %}
 
-{% if user.is_authenticated %}
+{% if project %}
 <h3>More Projects</h3>
+{% endif %}
 <ul>
     {% for project in project %}
     <li>
@@ -44,7 +45,6 @@
     </li>
     {% endfor %}
 </ul>
-{% endif%}
 
 <footer>
     <a href="{% url 'diyprojects:diyprojects_add' %}">
