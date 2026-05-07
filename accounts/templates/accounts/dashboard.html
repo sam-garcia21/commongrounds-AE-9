@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user.is_authenticated %}
+<h1>Dashboard</h1>
 
+{% if dashboard_empty %}
+<h2>Oops! You didn't make anything yet!</h2>
+{% endif %}
+
+{% if user.is_authenticated %}
 {% if book_list %}
 <h2>Books Contributed</h2>
 <h3>
