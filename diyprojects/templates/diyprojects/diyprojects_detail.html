@@ -25,6 +25,7 @@
 {% endif %}
 
 {% if user.is_authenticated %}
+<h3>Review this Project</h3>
 <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <p><textarea name="comment" placeholder=""></textarea></p>
@@ -34,6 +35,7 @@
 {% endif %}
 
 {% if user.is_authenticated %}
+<h3>Rate this Project</h3>
 <form action="{% url 'diyprojects:diyprojects_detail' project.pk %}" method="POST">
     {% csrf_token %}
     <input type="number" name="score" placeholder="" min="1" max="10">
@@ -41,7 +43,10 @@
 </form>
 {% endif %}
 
+<h3>Review Section</h3>
 {% for r in review %}
+<hr>
+<p>Posted by {{ r.reviewer }}</p>
 <p>{{ r.comment }}</p>
 <p>{% if r.image %}
     <img src="{{ r.image.url }}" alt="">

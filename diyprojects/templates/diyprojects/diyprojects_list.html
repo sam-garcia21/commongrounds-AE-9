@@ -35,8 +35,10 @@
 {% endif %}
 {% endif %}
 
+{% if user.is_authenticated %}
 {% if project %}
 <h3>More Projects</h3>
+{% endif %}
 {% endif %}
 <ul>
     {% for project in project %}
