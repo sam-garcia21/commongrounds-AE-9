@@ -25,7 +25,7 @@ def project_list(request):
 
         project = project.exclude(profile=viewer)
         project = project.exclude(favorites__profile=viewer)
-        project = project.exclude(reviews__reviewer=viewer)
+        project = project.exclude(reviews__reviewer=viewer).distinct()
 
     return render(request, 'diyprojects/diyprojects_list.html', {
         "project": project,

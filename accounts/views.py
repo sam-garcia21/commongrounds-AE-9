@@ -57,7 +57,7 @@ def dashboard(request):
         product_list = Product.objects.filter(owner=viewer)
         event_list = Event.objects.filter(organizer=viewer)
     
-    if not book_list or not commission_list or not project_list or not product_list or not event_list:
+    if not book_list and not commission_list and not project_list and not product_list and not event_list:
         dashboard_empty = True
 
     return render(request, 'accounts/dashboard.html', {
