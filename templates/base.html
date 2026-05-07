@@ -15,7 +15,7 @@
             <span>Welcome, {{ user.username }}!</span>
             <a href="/"><button type="button" class="base-btn">Homepage</button></a>
             <a href="/accounts/dashboard"><button type="button" class="base-btn">Dashboard</button></a>
-            <a href="/accounts/{{ user.username }}"><button type="button" class="base-btn">Change Profile</button></a>
+            <a href="/accounts/{{ user.username }}"><button type="button" class="base-btn">Update Profile</button></a>
             <form action="{% url 'logout' %}" method="POST" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" class="base-btn">Logout</button>
